@@ -1,0 +1,1789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .container-calc{
+            max-width: 1200px;
+            margin: auto;
+        }
+        .d-flex{
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .f-50{
+            flex-basis: 50%;
+        }
+        .f-100{
+            flex-basis: 100%;
+        }
+        .protein-calc{
+            margin-bottom: 20px;
+        }
+        .p-10{
+            padding: 10px;
+        }
+        .m-10{
+            margin: 10px;
+        }
+        .follow-calc, .protein-calc{
+            margin-bottom: 20px;
+            background-color: #84C8F9;
+            border: 4px solid #388cc7;
+            padding: 0px 0px 0 0px;
+            border-radius: 4px;
+            margin: 10px;
+            flex-basis: calc(50% - 20px);
+        }
+
+        .header-calc{
+            text-align: center;
+            padding: 5px;
+            background-color: #388cc7;
+            color: #fff;
+            font-size: 1.7em;
+        }
+        .row-calc{
+            border: 1px solid #343434;
+            border-radius: 3px;
+            margin: 5px 0;
+            justify-content: space-between;
+            background-color: #fff;
+        }
+        .row-calc .col-item{
+            padding: 5px;
+        }
+        .item-gram{
+            display: flex;
+        }
+        .type{
+            padding: 5px 10px;
+        }
+
+
+        .table-results {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 800px;
+            font-size: 16px;
+        }
+
+        /* Estilos para o cabeçalho da tabela */
+        .table-results th {
+            background-color: #388cc7;
+            border: 1px solid #dddddd;
+            color: #fff;
+            text-align: left;
+            padding: 10px;
+            text-align: center;
+        }
+
+        /* Estilos para as células da tabela */
+        .table-results td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 10px;
+        }
+
+        /* Estilos para linhas alternadas */
+        .table-results tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .space-left{
+            padding-left: 20px!important;
+        }
+
+        .over_button_calc{
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+            margin: 10px;
+            margin-bottom: 40px;
+            background-color: #f9f9f9;
+        }
+        .over_button_calc button:hover{
+            cursor: pointer;    
+        }
+        .over_button_calc button{
+            padding: 10px 30px;
+            margin: 5px;
+            border-radius: 3px;
+            border: 1px solid #676767;
+        }
+        .rolling_protein_calc, .rolling_follow_calc{
+            height: 300px;
+            overflow-y: scroll;
+        }
+        .rolling_protein_calc::-webkit-scrollbar, .rolling_follow_calc::-webkit-scrollbar{
+            width: 8px;
+            background-image: linear-gradient(to bottom,#84C8F9, #84C8F9);
+        }
+        .rolling_protein_calc::-webkit-scrollbar-thumb, .rolling_follow_calc::-webkit-scrollbar-thumb{
+            background-image: linear-gradient(to bottom,  #012d4d, #004170);
+            border-radius: 10px;
+        }
+        .follow-calc, .protein-calc{
+        }
+        .info_nutri{
+            border: 4px solid #388cc7;
+        }
+        .container_info_nutri{
+            padding: 5px;
+            overflow: auto;
+            max-height: 600px;
+        }
+        .container_info_nutri p{
+            margin-bottom: 5px;
+        }
+        .row-calc input{
+            width: 90px;
+        }
+        .table_def{
+            border-radius: 5px;
+            margin: 10px;
+            overflow: hidden;
+            border: 1px solid #388cc7;
+        }
+        .table_def_head{
+            text-align: center;
+            padding: 8px;
+            background-color: #388cc7;
+        }
+        .table_def_head h4, .table_def_head h5{
+            color: #fff;
+        }
+        .table_def_head h4{
+            font-size: 1.4em;
+        }
+        .table_def_content{
+            padding: 10px;
+        }
+        .table_def_content ul{
+            list-style: none;
+        }
+        .table_def_content ul li{
+            padding: 2px;
+        }
+        .table_def_content h5{
+            font-size: 1.4em;
+            margin: 10px 0 5px;
+        }
+        .table_def:nth-child(1){
+            flex-basis: calc(50% - 20px);
+        }
+        .table_def:nth-child(2){
+            flex-basis: calc(50% - 20px);
+        }
+        .table_def:nth-child(3){
+            flex-basis: calc(100% - 20px);
+        }
+
+
+        @media(max-width: 768px){
+            .follow-calc, .protein-calc, .f-50{
+                flex-basis: 100%;
+            }
+            .rolling_protein_calc, .rolling_follow_calc{
+                height: auto;
+            }
+            .row-calc input{
+                width: 70px;
+             }
+             .table_def:nth-child(1){
+                flex-basis: calc(100% - 10px);
+            }
+            .table_def:nth-child(2){
+                flex-basis: calc(100% - 10px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-calc">
+
+        
+        
+
+        <div class="d-flex">
+            <div class="protein-calc f-50">
+                <div class="header-calc">
+                    Proteínas
+                </div>
+                <div class="rolling_protein_calc">
+                    <div class="row-calc d-flex">
+                        <div class="col-item">Carne Moída</div>
+                        <div class="item-gram"><input value="0" type="number" name="" id="" min="0"><div class="type">g</div></div>
+                    </div>
+        
+                    <div class="row-calc d-flex">
+                        <div class="col-item">Carne de Panela Desfiada</div>
+                        <div class="item-gram"><input value="0" type="number" name="" id="" min="0"><div class="type">g</div></div>
+                    </div>
+        
+                    <div class="row-calc d-flex">
+                        <div class="col-item">Frango Desfiado</div>
+                        <div class="item-gram"><input value="0" type="number" name="" id="" min="0"><div class="type">g</div></div>
+                    </div>
+        
+                    <div class="row-calc d-flex">
+                        <div class="col-item">Sobrecoxa em Lascas</div>
+                        <div class="item-gram"><input value="0" type="number" name="" id="" min="0"><div class="type">g</div></div>
+                    </div>
+        
+                    <div class="row-calc d-flex">
+                        <div class="col-item">Carne Moída Colorida</div>
+                        <div class="item-gram"><input value="0" type="number" name="" id="" min="0"><div class="type">g</div></div>
+                    </div>
+        
+                    <div class="row-calc d-flex">
+                        <div class="col-item">Frango Desfiado Colorido</div>
+                        <div class="item-gram"><input value="0" type="number" name="" id="" min="0"><div class="type">g</div></div>
+                    </div>
+        
+                    <div class="row-calc d-flex">
+                        <div class="col-item">Peixe</div>
+                        <div class="item-gram"><input value="0" type="number" name="" id="" min="0"><div class="type">g</div></div>
+                    </div>
+        
+                    <div class="row-calc d-flex">
+                        <div class="col-item">Proteína de Soja</div>
+                        <div class="item-gram"><input value="0" type="number" name="" id="" min="0"><div class="type">g</div></div>
+                    </div>
+        
+                    <div class="row-calc d-flex">
+                        <div class="col-item">Frango em Tiras</div>
+                        <div class="item-gram"><input value="0" type="number" name="" id="" min="0"><div class="type">g</div></div>
+                    </div>
+        
+                    <div class="row-calc d-flex">
+                        <div class="col-item">Lombo Suíno Agridoce</div>
+                        <div class="item-gram"><input value="0" type="number" name="" id="" min="0"><div class="type">g</div></div>
+                    </div>
+                    
+                </div>
+                
+            </div>
+    
+            <div class="follow-calc f-50">
+                <div class="header-calc">
+                    Acompanhamentos
+                </div>
+                <div class="rolling_follow_calc">
+                    <div class="row-calc d-flex">
+                        <div class="col-item">Lentilha</div>
+                        <div class="item-gram"><input value="0" type="number" name="" id="" min="0"><div class="type">g</div></div>
+                    </div>
+        
+                    <div class="row-calc d-flex">
+                        <div class="col-item">Mix de Legumes</div>
+                        <div class="item-gram"><input value="0" type="number" name="" id="" min="0"><div class="type">g</div></div>
+                    </div>
+        
+                    <div class="row-calc d-flex">
+                        <div class="col-item">Arroz Integral</div>
+                        <div class="item-gram"><input value="0" type="number" name="" id="" min="0"><div class="type">g</div></div>
+                    </div>
+        
+                    <div class="row-calc d-flex">
+                        <div class="col-item">Arroz Integral Colorido</div>
+                        <div class="item-gram"><input value="0" type="number" name="" id="" min="0"><div class="type">g</div></div>
+                    </div>
+        
+                    <div class="row-calc d-flex">
+                        <div class="col-item">Arroz Branco</div>
+                        <div class="item-gram"><input value="0" type="number" name="" id="" min="0"><div class="type">g</div></div>
+                    </div>
+        
+                    <div class="row-calc d-flex">
+                        <div class="col-item">Escondidinho de Aipim</div>
+                        <div class="item-gram"><input value="0" type="number" name="" id="" min="0"><div class="type">g</div></div>
+                    </div>
+        
+                    <div class="row-calc d-flex">
+                        <div class="col-item">Feijão</div>
+                        <div class="item-gram"><input value="0" type="number" name="" id="" min="0"><div class="type">g</div></div>
+                    </div>
+        
+                    <div class="row-calc d-flex">
+                        <div class="col-item">Batata Doce Rústica</div>
+                        <div class="item-gram"><input value="0" type="number" name="" id="" min="0"><div class="type">g</div></div>
+                    </div>
+        
+                    <div class="row-calc d-flex">
+                        <div class="col-item">Purê de Abóbora Cabotiá</div>
+                        <div class="item-gram"><input value="0" type="number" name="" id="" min="0"><div class="type">g</div></div>
+                    </div>
+        
+                    <div class="row-calc d-flex">
+                        <div class="col-item">Purê de Batata Inglesa</div>
+                        <div class="item-gram"><input value="0" type="number" name="" id="" min="0"><div class="type">g</div></div>
+                    </div>
+        
+                    <div class="row-calc d-flex">
+                        <div class="col-item">Purê de Batata Salsa</div>
+                        <div class="item-gram"><input value="0" type="number" name="" id="" min="0"><div class="type">g</div></div>
+                    </div>
+        
+                    <div class="row-calc d-flex">
+                        <div class="col-item">Purê de Batata Doce</div>
+                        <div class="item-gram"><input value="0" type="number" name="" id="" min="0"><div class="type">g</div></div>
+                    </div>
+        
+                    <div class="row-calc d-flex">
+                        <div class="col-item">Macarrão Integral</div>
+                        <div class="item-gram"><input value="0" type="number" name="" id="" min="0"><div class="type">g</div></div>
+                    </div>
+        
+                    <div class="row-calc d-flex">
+                        <div class="col-item">Macarrão de Arroz</div>
+                        <div class="item-gram"><input value="0" type="number" name="" id="" min="0"><div class="type">g</div></div>
+                    </div>
+        
+                    <div class="row-calc d-flex">
+                        <div class="col-item">Grão de Bico</div>
+                        <div class="item-gram"><input value="0" type="number" name="" id="" min="0"><div class="type">g</div></div>
+                    </div>
+        
+                    <div class="row-calc d-flex">
+                        <div class="col-item">Macarrão Tradicional</div>
+                        <div class="item-gram"><input value="0" type="number" name="" id="" min="0"><div class="type">g</div></div>
+                    </div>
+        
+                    <div class="row-calc d-flex">
+                        <div class="col-item">Nhoque de Batata Doce</div>
+                        <div class="item-gram"><input value="0" type="number" name="" id="" min="0"><div class="type">g</div></div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+
+        <div class="over_button_calc">
+            <button class="btn_calc" onclick="calc_result()">
+                Calcular
+            </button>
+
+            <button class="btn_calc" id="btn_reset" onclick="clear_inputs()">
+                Calcule outra refeição
+            </button>
+        </div>
+
+        <div class="d-flex p-10">
+            <table class="table-results f-50">
+                <thead>
+                    <tr>
+                        <th colspan="4">Informação Nutricional</th>
+                    </tr>
+                    <tr>
+                        <th colspan="4">Porções por embalagem: 1 <br> Porção: 100g (1 unidade)</th>
+                    </tr>
+                    <tr>
+                        <th>Peso total da marmita (g):</th>
+                        <th>100g</th>
+                        <th class="table_items" id="table_value_soma">0</th>
+                        <th>%VD*</th>
+                    </tr>
+                </thead>
+    
+                <tbody>
+                    <tr>
+                        <td>Valor Energético (kcal)</td>
+                        <td class="table_items" id="table_100_val_energ">0</td>
+                        <td class="table_items" id="table_val_energ">0</td>
+                        <td class="table_items" id="table_vd_val_energ">0</td>
+                    </tr>
+    
+                    <tr>
+                        <td>Carboidratos (g)</td>
+                        <td class="table_items" id="table_100_carbo">0</td>
+                        <td class="table_items" id="table_carbo">0</td>
+                        <td class="table_items" id="table_vd_carbo">0</td>
+                    </tr>
+    
+                    <tr>
+                        <td class="space-left">Açúcares totais (g)</td>
+                        <td class="table_items" id="table_100_total_sugar">0</td>
+                        <td class="table_items" id="table_total_sugar">0</td>
+                        <td class="table_items" id="table_vd_total_sugar">0</td>
+                    </tr>
+    
+                    <tr>
+                        <td class="space-left">Açúcares adicionais (g)</td>
+                        <td class="table_items" id="table_100_add_sugar">0</td>
+                        <td class="table_items" id="table_add_sugar">0</td>
+                        <td class="table_items" id="table_vd_add_sugar">0</td>
+                    </tr>
+    
+                    <tr>
+                        <td>Proteínas (g)</td>
+                        <td class="table_items" id="table_100_protein">0</td>
+                        <td class="table_items" id="table_protein">0</td>
+                        <td class="table_items" id="table_vd_protein">0</td>
+                    </tr>
+    
+                    <tr>
+                        <td>Gorduras totais (g)</td>
+                        <td class="table_items" id="table_100_fat">0</td>
+                        <td class="table_items" id="table_fat">0</td>
+                        <td class="table_items" id="table_vd_fat">0</td>
+                    </tr>
+    
+                    <tr>
+                        <td class="space-left">Gorduras Saturadas (g)</td>
+                        <td class="table_items" id="table_100_sat_fat">0</td>
+                        <td class="table_items" id="table_sat_fat">0</td>
+                        <td class="table_items" id="table_vd_sat_fat">0</td>
+                    </tr>
+    
+                    <tr>
+                        <td class="space-left">Gorduras trans (g)</td>
+                        <td class="table_items" id="table_100_trans_fat">0</td>
+                        <td class="table_items" id="table_trans_fat">0</td>
+                        <td class="table_items" id="table_vd_trans_fat">0</td>
+                    </tr>
+    
+                    <tr>
+                        <td>Fibra Alimentar (g)</td>
+                        <td class="table_items" id="table_100_food_fiber">0</td>
+                        <td class="table_items" id="table_food_fiber">0</td>
+                        <td class="table_items" id="table_vd_food_fiber">0</td>
+                    </tr>
+    
+                    <tr>
+                        <td>Sódio (mg)</td>
+                        <td class="table_items" id="table_100_sodium">0</td>
+                        <td class="table_items" id="table_sodium">0</td>
+                        <td class="table_items" id="table_vd_sodium">0</td>
+                    </tr>
+                </tbody>
+            </table>
+    
+            <div class="info_nutri f-50">
+                <div class="head_info_nutri">
+                    <h3>Ingredientes:</h3>
+                </div>
+
+                <div class="container_info_nutri"></div>
+            </div>
+        </div>
+
+        
+
+        <div class="d-flex">
+            <div class="table_def f-50">
+                <div class="table_def_head">
+                    <h4>Montagem Padrão:</h4>
+                    <h5>1 Proteína + 1 Acompanhamento</h5>
+                </div>
+    
+                <div class="table_def_content">
+                    <ul>
+                        <li><strong>Marmita 250g:</strong> 150g Proteína + 150g Acompanhamento</li>
+                        <li><strong>Marmita 350g:</strong> 200g Proteína + 150g Acompanhamento</li>
+                        <li><strong>Marmita 450g:</strong> 250g Proteína + 150g Acompanhamento</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="table_def f-50">
+                <div class="table_def_head">
+                    <h4>Montagem Padrão:</h4>
+                    <h5>1 Proteína + 2 Acompanhamentos</h5>
+                </div>
+    
+                <div class="table_def_content">
+                    <ul>
+                        <li><strong>Marmita 250g:</strong> 80g Proteína + 85g Acompanhamento 1 + 85g Acompanhamento 2</li>
+                        <li><strong>Marmita 350g:</strong> 120g Proteína + 115g Acompanhamento 1 + 115g Acompanhamento 2</li>
+                        <li><strong>Marmita 450g:</strong> 150g Proteína + 150g Acompanhamento 1 + 150g Acompanhamento 2</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="table_def">
+                <div class="table_def_head">
+                    <h4>Montagem Padrão:</h4>
+                    <h5>Feijão + Arroz</h5>
+                </div>
+    
+                <div class="table_def_content d-flex">
+                    <div class="f-50">
+                        <h5>Proteína + Feijão + Arroz:</h5>
+                        <ul>
+                            <li><strong>Marmita 250g:</strong> 100g Proteína + 100g Feijão + 50g Arroz</li>
+                            <li><strong>Marmita 350g:</strong> 150g Proteína + 150g Feijão + 70g Arroz</li>
+                            <li><strong>Marmita 450g:</strong> 210g Proteína + 210g Feijão + 90g Arroz</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="f-50">
+                        <h5>Proteína + Feijão + Arroz + Acompanhamento:</h5>
+                        <ul>
+                            <li><strong>Marmita 250g:</strong> 80g Proteína + 90g Feijão + 30g Arroz + 50g Acompanhamento</li>
+                            <li><strong>Marmita 350g:</strong> 90g Proteína + 120g Feijão + 70g Arroz + 70g Acompanhamento</li>
+                            <li><strong>Marmita 450g:</strong> 120g Proteína + 150g Feijão + 90g Arroz + 90g Acompanhamento</li>
+                        </ul>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+    <script src="follow.js"></script>
+
+    <script>
+
+        const all_values = document.querySelectorAll('.protein-calc input');
+        //============== inputs dos campos dos alimentos ========================
+        let input_carne_moida = 0; //apenas para teste
+        let input_carne_panela = 0; //apenas para teste
+        let input_frango_desfiado = 0; //apenas para teste
+        let input_sobrecoxa_em_lasca = 0; //apenas para teste
+        let input_carne_moida_colorida = 0; //apenas para teste
+        let input_frango_desfiado_colorido = 0; //apenas para teste
+        let input_peixe = 0; //apenas para teste
+        let input_proteina_de_soja = 0; //apenas para teste
+        let input_frango_em_tiras = 0; //apenas para teste
+        let input_lombo_suino_agridoce = 0; //apenas para teste
+        //============== inputs dos campos dos alimentos ========================
+
+
+
+        const all_values2 = document.querySelectorAll('.follow-calc input');
+        //============== inputs dos campos dos alimentos ========================
+        let input_lentilha = 0; //apenas para teste
+        let input_mix_de_legumes = 0; //apenas para teste
+        let input_arroz_integral = 0; //apenas para teste
+        let input_arroz_integral_colorido = 0; //apenas para teste
+        let input_arroz_branco = 0; //apenas para teste
+        let input_escondidinho_de_aipim = 0; //apenas para teste
+        let input_feijao = 0; //apenas para teste
+        let input_batata_doce_rustica = 0; //apenas para teste
+        let input_pure_de_abobora_cabotia = 0; //apenas para teste
+        let input_pure_de_batata_inglesa = 0; //apenas para teste
+        let input_pure_de_batata_salsa = 0; //apenas para teste
+        let input_pure_de_batata_doce = 0; //apenas para teste
+        let input_macarrao_integral = 0; //apenas para teste
+        let input_macarrao_de_arroz = 0; //apenas para teste
+        let input_grao_de_bico = 0; //apenas para teste
+        let input_macarrao_tradicional = 0; //apenas para teste
+        let input_nhoque_de_batata_doce = 0; //apenas para teste
+        //============== inputs dos campos dos alimentos ========================
+
+        function calc_result(){
+        
+        //============== inputs dos campos dos alimentos ========================
+        if(all_values[0].value != 0){
+            input_carne_moida = all_values[0].value; //apenas para teste
+        }
+        if(all_values[1].value != 0){
+            input_carne_panela = all_values[1].value; //apenas para teste
+        }
+        if(all_values[2].value != 0){
+            input_frango_desfiado = all_values[2].value; //apenas para teste
+        }
+        if(all_values[3].value != 0){
+            input_sobrecoxa_em_lasca = all_values[3].value; //apenas para teste
+        }
+        if(all_values[4].value != 0){
+            input_carne_moida_colorida = all_values[4].value; //apenas para teste
+        }
+        if(all_values[5].value != 0){
+            input_frango_desfiado_colorido = all_values[5].value; //apenas para teste
+        }
+        if(all_values[6].value != 0){
+            input_peixe = all_values[6].value; //apenas para teste
+        }
+        if(all_values[7].value != 0){
+            input_proteina_de_soja = all_values[7].value; //apenas para teste
+        }
+        if(all_values[8].value != 0){
+            input_frango_em_tiras = all_values[8].value; //apenas para teste
+        }
+        if(all_values[9].value != 0){
+            input_lombo_suino_agridoce = all_values[9].value; //apenas para teste
+        }
+        //============== inputs dos campos dos alimentos ========================
+
+        //============== inputs dos campos dos alimentos ========================
+        if(all_values2[0].value != 0){
+            input_lentilha = all_values2[0].value; //apenas para teste
+        }
+        if(all_values2[1].value != 0){
+            input_mix_de_legumes = all_values2[1].value; //apenas para teste
+        }
+        if(all_values2[2].value != 0){
+            input_arroz_integral = all_values2[2].value; //apenas para teste
+        }
+        if(all_values2[3].value != 0){
+            input_arroz_integral_colorido = all_values2[3].value; //apenas para teste
+        }
+        if(all_values2[4].value != 0){
+            input_arroz_branco = all_values2[4].value; //apenas para teste
+        }
+        if(all_values2[5].value != 0){
+            input_escondidinho_de_aipim = all_values2[5].value; //apenas para teste
+        }
+        if(all_values2[6].value != 0){
+            input_feijao = all_values2[6].value; //apenas para teste
+        }
+        if(all_values2[7].value != 0){
+            input_batata_doce_rustica = all_values2[7].value; //apenas para teste
+        }
+        if(all_values2[8].value != 0){
+            input_pure_de_abobora_cabotia = all_values2[8].value; //apenas para teste
+        }
+        if(all_values2[9].value != 0){
+            input_pure_de_batata_inglesa = all_values2[9].value; //apenas para teste
+        }
+        if(all_values2[10].value != 0){
+            input_pure_de_batata_salsa = all_values2[10].value; //apenas para teste
+        }
+        if(all_values2[11].value != 0){
+            input_pure_de_batata_doce = all_values2[11].value; //apenas para teste
+        }
+        if(all_values2[12].value != 0){
+            input_macarrao_integral = all_values2[12].value; //apenas para teste
+        }
+        if(all_values2[13].value != 0){
+            input_macarrao_de_arroz = all_values2[13].value; //apenas para teste
+        }
+        if(all_values2[14].value != 0){
+            input_grao_de_bico = all_values2[14].value; //apenas para teste
+        }
+        if(all_values2[15].value != 0){
+            input_macarrao_tradicional = all_values2[15].value; //apenas para teste
+        }
+        if(all_values2[16].value != 0){
+            input_nhoque_de_batata_doce = all_values2[16].value; //apenas para teste
+        }
+        //============== inputs dos campos dos alimentos ========================
+
+
+
+        class protein{
+            constructor(nome, val_energ, carbo, total_sugar,add_sugar,protein,fat,sat_fat,trans_fat,food_fiber,sodium,ingred,allergic){
+                this.nome = nome;
+                this.val_energ = val_energ;
+                this.carbo = carbo;
+                this.total_sugar = total_sugar;
+                this.add_sugar = add_sugar;
+                this.protein = protein;
+                this.fat = fat;
+                this.sat_fat = sat_fat
+                this.trans_fat = trans_fat;
+                this.food_fiber = food_fiber;
+                this.sodium = sodium;
+                this.ingred = ingred;
+                this.allergic = allergic
+            }
+            getDynamicPropertyValue(proteryName){
+                return this[proteryName]
+            }
+        }
+
+        let carne_moida = new protein('Carne Moída',121,1.1,0,0,20,4.1,1.8,0,0.3,404,'Patinho, tomate, cebola, cheiro cerve, sal, alho, vinagre, colorau, mostarda em pó', 'ALÉRGICOS: PODE CONTER GLÚTEN');
+
+        let carne_panela = new protein('Carne de Panela desfiada',204,2.7,0,0,30,8.1,3.9,0,0.5,547,'Paleta bovina, cebola, tomate, cerveja preta, sal, alho, tomilho, tempero sírio e aroma artificial de fumaça','CONTÉM GLÚTEN. ALÉRGICOS: CONTÉM CEVADA');
+
+        let frango_desfiado = new protein('Frango desfiado', 24,2.2,0,0,3.4, 0.2, 0, 0, 0.6, 504,'frango em cubos, passata de tomate, tomate, cebola, cheiro verde, sal, alho, colorau, alho granulado, cominho em pó e páprica picante', ' ALÉRGICOS: PODE CONTER GLÚTEN, SOJA E LEITE');
+
+        let sobrecoxa_em_lasca = new protein('Sobrecoxa em lasca',285,2,0,0,31,17,5.2,0,0.5,547,'Coxa e sobrecoxa de frango sem pele, cebola, pimentão, sal, alecrim e canela em pó', 'ALÉRGICOS: PODE CONTER GLÚTEN');
+
+        let carne_moida_colorida = new protein('Carne moída colorida',119,2.5,0,0,17,4.5,1.7,0,0.6,509,'Patinho moído, azeitonas verdes, cenoura, tomate, cebola, cheiro verde, sal, alho, vinagrete, colorau, mostarda em pó, páprica picante e tomilho', 'ALÉRGICOS: PODE CONTER GLÚTEN');
+
+        let frango_desfiado_colorido = new protein('Frango desfiado colorido',33,4.3,0,0,3.2,0.3,0,0,0.8,494,'frango em cubos, passata de tomate, milho, palmito, tomate, cebola, cheiro verde, sal, alho, colorau, alho granulado, cominho em pó e páprica picante','ALÉRGICOS: PODE CONTER GLÚTEN, SOJA E LEITE');
+
+        let peixe = new protein('Peixe',159,0,0,0,25,6.5, 2,0,0,266,'Filé de tilápia, azeite de oliva, sal, lemon pepper e cheiro verde','ALÉRGICOS: PODE CONTER GLÚTEN');
+
+        let proteina_de_soja = new protein('Proteína de soja',76,4.9,0,0,13,0.5,0,0,4.7,163,'Proteína texturizada de soja, tomate, cebola, cheiro verde, alho, orégano, chimichurri, sal, cominho, páprica defumada e colorau','ALÉRGICOS: CONTÉM SOJA. PODE CONTER GLÚTEN, AMENDOIM, NOZES, AMÊNDOAS, AVELÃS, CASTANHA DE CAJÚ, CASTANHA DO PARÁ, MACADÂMIA E PISTACHE');
+
+        let frango_em_tiras = new protein('Frango em tiras',177,2.9,0,0,31,4.6,1.6,0,0.7,564,'Peito de frango em tiras, cebola, alho poró, vinho branco, molho shoyu, cheiro verde, alho, sal e ervas finas','ALÉRGICOS: CONTÉM SOJA. PODE CONTER GLÚTEN');
+
+        let lombo_suino_agridoce = new protein('Lombo suíno agridoce',270,18,16,16,27,10,3.9,0,0.3,555,'Lombo suíno em cubos, geléia de abacaxi, cebola, molho shoyu, açúcar mascavo, cheiro verde, vinho branco seco, sal e cominho', 'ALÉRGICOS: PODE CONTER GLÚTEN');
+        
+        let lentilha = new protein('Lentilha',152,25,0,0,12,0.4,0,0,1.5,236,'Lentilha, tomate, cebola, cheiro verde, alho, sal, chimichurri, vinagrete desidratado, cebolinha e salsinha secas, páprica picante, páprica defumada, colorau e folhas de louro', 'ALÉRGICOS: PODE CONTER GLÚTEN');
+
+        let mix_de_legumes = new protein('Mix de legumes',52,8.4,0,0,1.7,1.3,0.2,0,2.9,180,'Cenoura, abóbrinha, berinjela, brócolis, couve-flor, azeite de oliva, sal, lemon pepper, alho granulado, cebolinha e salsinha secas','ALÉRGICOS: PODE CONTER GLÚTEN');
+
+        let arroz_integral = new protein('Arroz integral',179,39,0,0,3.7,0.9,0.2,0,2.4,159,'Arroz integral e sal','ALÉRGICOS: PODE CONTER GLÚTEN');
+
+        let arroz_integral_colorido = new protein('Arroz integral colorido',189,41,0,0,4.1,1,0.2,0,3.2,164,'Arroz integral, vagem, ceboura e sal','ALÉRGICOS: PODE CONTER GLÚTEN');
+
+        let arroz_branco = new protein('Arroz branco',120,26,0,0,2.5,0.7,0.1,0,0.5,119,'Arroz branco, azeite de oliva, alho e sal','ALÉRGICOS: PODE CONTER GLÚTEN');
+
+        let escondidinho_de_aipim = new protein('Escondidinho de aipim',101,24,0,0,0.8,0.2,0,0,0.6,212,'Aipim, sal, alho, orégano seco e água','ALÉRGICOS: PODE CONTER GLÚTEN');
+
+        let batata_doce_rustica = new protein('Batata doce rústica',173,38,0,0,1.7,1.6,0.2,0,3.5,386,'Batata doce, azeite de oliva, sal, páprica defumada, orégano fresco, orégano seco e salsinha e cebolinha secas','ALÉRGICOS: PODE CONTER GLÚTEN');
+
+        let pure_de_abobora_cabotia = new protein('Purê de abóbora cabotiá',60,11,0,0,2.3,0.7,0.2,0,2.9,212,'Abóbora cabotiá, água, sal, vinagrete desidratado, salsinha e cebolinha secas, lemon pepper e gengibre em pó','ALÉRGICOS: PODE CONTER GLÚTEN');
+
+        let pure_de_batata_inglesa = new protein('Purê de batata inglesa',85,19,0,0,2.3,0,0,0,1.6,346,'Batata inglesa, cheiro verde, sal, água, alho granulado e ervas finas','ALÉRGICOS: PODE CONTER GLÚTEN');
+
+        let pure_de_batata_salsa = new protein('Purê de batata salsa',123,29,0,0,1.4,0.2,0,0,2.5,325,'Batata salsa, cheiro verde, sal, alho, água e nóz moscada','ALÉRGICOS: PODE CONTER GLÚTEN');
+
+        let pure_de_batata_doce = new protein('Purê de batata doce',153,36,0,0,1.7,0.2,0,0,3.3,357,'Batata doce, cheiro verde, sal, alho e água','ALÉRGICOS: PODE CONTER GLÚTEN');
+
+        let macarrao_integral = new protein('Macarrão integral',178,37,0,0,5.4,0.9,0,0,1.6,158,'Farinha de trigo integral, fibra de trigo, corantes naturais: urucum e cúrcuma e sal','CONTÉM GLÚTEN. ALÉRGICOS: CONTÉM DERIVADOS DE TRIGO. PODE CONTER OVOS, SOJA, CEVADA, AVEIA E CENTEIO');
+
+        let macarrao_de_arroz = new protein('Macarrão de arroz',182,40,0,0,3.5,0.9,0.3,0,0.4,161,'Farinha de arroz, corantes naturais: cúrcuma e urucum e sal','ALÉRGICOS: PODE CONTER GLÚTEN');
+
+        let grao_de_bico = new protein('Grão de bico',150,24,0,0,8.6,2.2,0.4,0,5.1,113,'Grão de bico, tomate, cebola, cheiro verde, sal, alho, chimichurri, colorau, vinagrete desidratado e páprica defumada','ALÉRGICOS: PODE CONTER GLÚTEN');
+
+        let feijao = new protein('Feijão',84,15,0,0,5.4,0.3,0,0,5.4,76,'Feijão preto, tomate, cebola, cheiro verde, sal, alho, chimichurri, vinagrete desidratado, salsinha e cebolinha secas, páprica defumada, páprica picante, colorau e louro','ALÉRGICOS: PODE CONTER GLÚTEN');
+
+        let macarrao_tradicional = new protein('Macarrão tradicional',137,29,0,0,4.3,0.4,0,0,2.9,126,'Sêmola de trigo enriquecida com ferro e ácido fólico, farelo de trigo, fibra de trigo e sal','CONTÉM GLÚTEN. ALÉRGICOS: CONTÉM DERIVADOS DE TRIGO');
+
+        let nhoque_de_batata_doce = new protein('Nhoque de Batata Doce',162,31,0,0,6,2,0.5,0,4.5,260,'Farinha de trigo enriquecida com ferro e ácido fólico, ovo, sal e batata','CONTÉM GLÚTEN. ALÉRGICOS: CONTÉM TRIGO, OVOS E SOJA');
+
+
+
+        
+        //============ calculo carne moída =======================================
+        let result_val_energ_carne_moida = (carne_moida.val_energ/100)*input_carne_moida;
+        let result_carbo_carne_moida = (carne_moida.carbo/100)*input_carne_moida;
+        let result_total_sugar_carne_moida = (carne_moida.total_sugar/100)*input_carne_moida;
+        let result_add_sugar_carne_moida = (carne_moida.add_sugar/100)*input_carne_moida;
+        let result_protein_carne_moida = (carne_moida.protein/100)*input_carne_moida;
+        let result_fat_carne_moida = (carne_moida.fat/100)*input_carne_moida;
+        let result_sat_fat_carne_moida = (carne_moida.sat_fat/100)*input_carne_moida;
+        let result_trans_fat_carne_moida = (carne_moida.trans_fat/100)*input_carne_moida;
+        let result_food_fiber_carne_moida = (carne_moida.food_fiber/100)*input_carne_moida;
+        let result_sodium_carne_moida = (carne_moida.sodium/100)*input_carne_moida;
+        //============ calculo carne moída =======================================
+
+        //============ calculo carne de panela =======================================
+        let result_val_energ_carne_panela = (carne_panela.val_energ/100)*input_carne_panela;
+        let result_carbo_carne_panela = (carne_panela.carbo/100)*input_carne_panela;
+        let result_total_sugar_carne_panela = (carne_panela.total_sugar/100)*input_carne_panela;
+        let result_add_sugar_carne_panela = (carne_panela.add_sugar/100)*input_carne_panela;
+        let result_protein_carne_panela = (carne_panela.protein/100)*input_carne_panela;
+        let result_fat_carne_panela = (carne_panela.fat/100)*input_carne_panela;
+        let result_sat_fat_carne_panela = (carne_panela.sat_fat/100)*input_carne_panela;
+        let result_trans_fat_carne_panela = (carne_panela.trans_fat/100)*input_carne_panela;
+        let result_food_fiber_carne_panela = (carne_panela.food_fiber/100)*input_carne_panela;
+        let result_sodium_carne_panela = (carne_panela.sodium/100)*input_carne_panela;
+        //============ calculo carne de panela =======================================
+
+        //============ calculo frango_desfiado =======================================
+        let result_val_energ_frango_desfiado = (frango_desfiado.val_energ/100)*input_frango_desfiado;
+        let result_carbo_frango_desfiado = (frango_desfiado.carbo/100)*input_frango_desfiado;
+        let result_total_sugar_frango_desfiado = (frango_desfiado.total_sugar/100)*input_frango_desfiado;
+        let result_add_sugar_frango_desfiado = (frango_desfiado.add_sugar/100)*input_frango_desfiado;
+        let result_protein_frango_desfiado = (frango_desfiado.protein/100)*input_frango_desfiado;
+        let result_fat_frango_desfiado = (frango_desfiado.fat/100)*input_frango_desfiado;
+        let result_sat_fat_frango_desfiado = (frango_desfiado.sat_fat/100)*input_frango_desfiado;
+        let result_trans_fat_frango_desfiado = (frango_desfiado.trans_fat/100)*input_frango_desfiado;
+        let result_food_fiber_frango_desfiado = (frango_desfiado.food_fiber/100)*input_frango_desfiado;
+        let result_sodium_frango_desfiado = (frango_desfiado.sodium/100)*input_frango_desfiado;
+        //============ calculo frango_desfiado =======================================
+
+        //============ calculo sobrecoxa_em_lasca =======================================
+        let result_val_energ_sobrecoxa_em_lasca = (sobrecoxa_em_lasca.val_energ/100)*input_sobrecoxa_em_lasca;
+        let result_carbo_sobrecoxa_em_lasca = (sobrecoxa_em_lasca.carbo/100)*input_sobrecoxa_em_lasca;
+        let result_total_sugar_sobrecoxa_em_lasca = (sobrecoxa_em_lasca.total_sugar/100)*input_sobrecoxa_em_lasca;
+        let result_add_sugar_sobrecoxa_em_lasca = (sobrecoxa_em_lasca.add_sugar/100)*input_sobrecoxa_em_lasca;
+        let result_protein_sobrecoxa_em_lasca = (sobrecoxa_em_lasca.protein/100)*input_sobrecoxa_em_lasca;
+        let result_fat_sobrecoxa_em_lasca = (sobrecoxa_em_lasca.fat/100)*input_sobrecoxa_em_lasca;
+        let result_sat_fat_sobrecoxa_em_lasca = (sobrecoxa_em_lasca.sat_fat/100)*input_sobrecoxa_em_lasca;
+        let result_trans_fat_sobrecoxa_em_lasca = (sobrecoxa_em_lasca.trans_fat/100)*input_sobrecoxa_em_lasca;
+        let result_food_fiber_sobrecoxa_em_lasca = (sobrecoxa_em_lasca.food_fiber/100)*input_sobrecoxa_em_lasca;
+        let result_sodium_sobrecoxa_em_lasca = (sobrecoxa_em_lasca.sodium/100)*input_sobrecoxa_em_lasca;
+        //============ calculo sobrecoxa_em_lasca =======================================
+
+        //============ calculo moida_colorida =======================================
+        let result_val_energ_carne_moida_colorida = (carne_moida_colorida.val_energ/100)*input_carne_moida_colorida;
+        let result_carbo_carne_moida_colorida = (carne_moida_colorida.carbo/100)*input_carne_moida_colorida;
+        let result_total_sugar_carne_moida_colorida = (carne_moida_colorida.total_sugar/100)*input_carne_moida_colorida;
+        let result_add_sugar_carne_moida_colorida = (carne_moida_colorida.add_sugar/100)*input_carne_moida_colorida;
+        let result_protein_carne_moida_colorida = (carne_moida_colorida.protein/100)*input_carne_moida_colorida;
+        let result_fat_carne_moida_colorida = (carne_moida_colorida.fat/100)*input_carne_moida_colorida;
+        let result_sat_fat_carne_moida_colorida = (carne_moida_colorida.sat_fat/100)*input_carne_moida_colorida;
+        let result_trans_fat_carne_moida_colorida = (carne_moida_colorida.trans_fat/100)*input_carne_moida_colorida;
+        let result_food_fiber_carne_moida_colorida = (carne_moida_colorida.food_fiber/100)*input_carne_moida_colorida;
+        let result_sodium_carne_moida_colorida = (carne_moida_colorida.sodium/100)*input_carne_moida_colorida;
+        //============ calculo moida_colorida =======================================
+
+        //============ calculo frango_desfiado_colorido =======================================
+        let result_val_energ_frango_desfiado_colorido = (frango_desfiado_colorido.val_energ/100)*input_frango_desfiado_colorido;
+        let result_carbo_frango_desfiado_colorido = (frango_desfiado_colorido.carbo/100)*input_frango_desfiado_colorido;
+        let result_total_sugar_frango_desfiado_colorido = (frango_desfiado_colorido.total_sugar/100)*input_frango_desfiado_colorido;
+        let result_add_sugar_frango_desfiado_colorido = (frango_desfiado_colorido.add_sugar/100)*input_frango_desfiado_colorido;
+        let result_protein_frango_desfiado_colorido = (frango_desfiado_colorido.protein/100)*input_frango_desfiado_colorido;
+        let result_fat_frango_desfiado_colorido = (frango_desfiado_colorido.fat/100)*input_frango_desfiado_colorido;
+        let result_sat_fat_frango_desfiado_colorido = (frango_desfiado_colorido.sat_fat/100)*input_frango_desfiado_colorido;
+        let result_trans_fat_frango_desfiado_colorido = (frango_desfiado_colorido.trans_fat/100)*input_frango_desfiado_colorido;
+        let result_food_fiber_frango_desfiado_colorido = (frango_desfiado_colorido.food_fiber/100)*input_frango_desfiado_colorido;
+        let result_sodium_frango_desfiado_colorido = (frango_desfiado_colorido.sodium/100)*input_frango_desfiado_colorido;
+        //============ calculo frango_desfiado_colorido =======================================
+
+        //============ calculo peixe =======================================
+        let result_val_energ_peixe = (peixe.val_energ/100)*input_peixe;
+        let result_carbo_peixe = (peixe.carbo/100)*input_peixe;
+        let result_total_sugar_peixe = (peixe.total_sugar/100)*input_peixe;
+        let result_add_sugar_peixe = (peixe.add_sugar/100)*input_peixe;
+        let result_protein_peixe = (peixe.protein/100)*input_peixe;
+        let result_fat_peixe = (peixe.fat/100)*input_peixe;
+        let result_sat_fat_peixe = (peixe.sat_fat/100)*input_peixe;
+        let result_trans_fat_peixe = (peixe.trans_fat/100)*input_peixe;
+        let result_food_fiber_peixe = (peixe.food_fiber/100)*input_peixe;
+        let result_sodium_peixe = (peixe.sodium/100)*input_peixe;
+        //============ calculo peixe =======================================
+
+        //============ calculo proteina_de_soja =======================================
+        let result_val_energ_proteina_de_soja = (proteina_de_soja.val_energ/100)*input_proteina_de_soja;
+        let result_carbo_proteina_de_soja = (proteina_de_soja.carbo/100)*input_proteina_de_soja;
+        let result_total_sugar_proteina_de_soja = (proteina_de_soja.total_sugar/100)*input_proteina_de_soja;
+        let result_add_sugar_proteina_de_soja = (proteina_de_soja.add_sugar/100)*input_proteina_de_soja;
+        let result_protein_proteina_de_soja = (proteina_de_soja.protein/100)*input_proteina_de_soja;
+        let result_fat_proteina_de_soja = (proteina_de_soja.fat/100)*input_proteina_de_soja;
+        let result_sat_fat_proteina_de_soja = (proteina_de_soja.sat_fat/100)*input_proteina_de_soja;
+        let result_trans_fat_proteina_de_soja = (proteina_de_soja.trans_fat/100)*input_proteina_de_soja;
+        let result_food_fiber_proteina_de_soja = (proteina_de_soja.food_fiber/100)*input_proteina_de_soja;
+        let result_sodium_proteina_de_soja = (proteina_de_soja.sodium/100)*input_proteina_de_soja;
+        //============ calculo proteina_de_soja =======================================
+
+        //============ calculo frango_em_tiras =======================================
+        let result_val_energ_frango_em_tiras = (frango_em_tiras.val_energ/100)*input_frango_em_tiras;
+        let result_carbo_frango_em_tiras = (frango_em_tiras.carbo/100)*input_frango_em_tiras;
+        let result_total_sugar_frango_em_tiras = (frango_em_tiras.total_sugar/100)*input_frango_em_tiras;
+        let result_add_sugar_frango_em_tiras = (frango_em_tiras.add_sugar/100)*input_frango_em_tiras;
+        let result_protein_frango_em_tiras = (frango_em_tiras.protein/100)*input_frango_em_tiras;
+        let result_fat_frango_em_tiras = (frango_em_tiras.fat/100)*input_frango_em_tiras;
+        let result_sat_fat_frango_em_tiras = (frango_em_tiras.sat_fat/100)*input_frango_em_tiras;
+        let result_trans_fat_frango_em_tiras = (frango_em_tiras.trans_fat/100)*input_frango_em_tiras;
+        let result_food_fiber_frango_em_tiras = (frango_em_tiras.food_fiber/100)*input_frango_em_tiras;
+        let result_sodium_frango_em_tiras = (frango_em_tiras.sodium/100)*input_frango_em_tiras;
+        //============ calculo frango_em_tiras =======================================
+
+        //============ calculo lombo_suino_agridoce =======================================
+        let result_val_energ_lombo_suino_agridoce = (lombo_suino_agridoce.val_energ/100)*input_lombo_suino_agridoce;
+        let result_carbo_lombo_suino_agridoce = (lombo_suino_agridoce.carbo/100)*input_lombo_suino_agridoce;
+        let result_total_sugar_lombo_suino_agridoce = (lombo_suino_agridoce.total_sugar/100)*input_lombo_suino_agridoce;
+        let result_add_sugar_lombo_suino_agridoce = (lombo_suino_agridoce.add_sugar/100)*input_lombo_suino_agridoce;
+        let result_protein_lombo_suino_agridoce = (lombo_suino_agridoce.protein/100)*input_lombo_suino_agridoce;
+        let result_fat_lombo_suino_agridoce = (lombo_suino_agridoce.fat/100)*input_lombo_suino_agridoce;
+        let result_sat_fat_lombo_suino_agridoce = (lombo_suino_agridoce.sat_fat/100)*input_lombo_suino_agridoce;
+        let result_trans_fat_lombo_suino_agridoce = (lombo_suino_agridoce.trans_fat/100)*input_lombo_suino_agridoce;
+        let result_food_fiber_lombo_suino_agridoce = (lombo_suino_agridoce.food_fiber/100)*input_lombo_suino_agridoce;
+        let result_sodium_lombo_suino_agridoce = (lombo_suino_agridoce.sodium/100)*input_lombo_suino_agridoce;
+        //============ calculo lombo_suino_agridoce =======================================
+
+        //============ calculo lentilha =======================================
+        let result_val_energ_lentilha = (lentilha.val_energ/100)*input_lentilha;
+        let result_carbo_lentilha = (lentilha.carbo/100)*input_lentilha;
+        let result_total_sugar_lentilha = (lentilha.total_sugar/100)*input_lentilha;
+        let result_add_sugar_lentilha = (lentilha.add_sugar/100)*input_lentilha;
+        let result_protein_lentilha = (lentilha.protein/100)*input_lentilha;
+        let result_fat_lentilha = (lentilha.fat/100)*input_lentilha;
+        let result_sat_fat_lentilha = (lentilha.sat_fat/100)*input_lentilha;
+        let result_trans_fat_lentilha = (lentilha.trans_fat/100)*input_lentilha;
+        let result_food_fiber_lentilha = (lentilha.food_fiber/100)*input_lentilha;
+        let result_sodium_lentilha = (lentilha.sodium/100)*input_lentilha;
+        //============ calculo lentilha =======================================
+
+        //============ calculo mix de legumes =======================================
+        let result_val_energ_mix_de_legumes = (mix_de_legumes.val_energ/100)*input_mix_de_legumes;
+        let result_carbo_mix_de_legumes = (mix_de_legumes.carbo/100)*input_mix_de_legumes;
+        let result_total_sugar_mix_de_legumes = (mix_de_legumes.total_sugar/100)*input_mix_de_legumes;
+        let result_add_sugar_mix_de_legumes = (mix_de_legumes.add_sugar/100)*input_mix_de_legumes;
+        let result_protein_mix_de_legumes = (mix_de_legumes.protein/100)*input_mix_de_legumes;
+        let result_fat_mix_de_legumes = (mix_de_legumes.fat/100)*input_mix_de_legumes;
+        let result_sat_fat_mix_de_legumes = (mix_de_legumes.sat_fat/100)*input_mix_de_legumes;
+        let result_trans_fat_mix_de_legumes = (mix_de_legumes.trans_fat/100)*input_mix_de_legumes;
+        let result_food_fiber_mix_de_legumes = (mix_de_legumes.food_fiber/100)*input_mix_de_legumes;
+        let result_sodium_mix_de_legumes = (mix_de_legumes.sodium/100)*input_mix_de_legumes;
+        //============ calculo mix de legumes =======================================
+
+        //============ calculo arroz_integral =======================================
+        let result_val_energ_arroz_integral = (arroz_integral.val_energ/100)*input_arroz_integral;
+        let result_carbo_arroz_integral = (arroz_integral.carbo/100)*input_arroz_integral;
+        let result_total_sugar_arroz_integral = (arroz_integral.total_sugar/100)*input_arroz_integral;
+        let result_add_sugar_arroz_integral = (arroz_integral.add_sugar/100)*input_arroz_integral;
+        let result_protein_arroz_integral = (arroz_integral.protein/100)*input_arroz_integral;
+        let result_fat_arroz_integral = (arroz_integral.fat/100)*input_arroz_integral;
+        let result_sat_fat_arroz_integral = (arroz_integral.sat_fat/100)*input_arroz_integral;
+        let result_trans_fat_arroz_integral = (arroz_integral.trans_fat/100)*input_arroz_integral;
+        let result_food_fiber_arroz_integral = (arroz_integral.food_fiber/100)*input_arroz_integral;
+        let result_sodium_arroz_integral = (arroz_integral.sodium/100)*input_arroz_integral;
+        //============ calculo arroz_integral =======================================
+
+        //============ calculo arroz_integral_colorido =======================================
+        let result_val_energ_arroz_integral_colorido = (arroz_integral_colorido.val_energ/100)*input_arroz_integral_colorido;
+        let result_carbo_arroz_integral_colorido = (arroz_integral_colorido.carbo/100)*input_arroz_integral_colorido;
+        let result_total_sugar_arroz_integral_colorido = (arroz_integral_colorido.total_sugar/100)*input_arroz_integral_colorido;
+        let result_add_sugar_arroz_integral_colorido = (arroz_integral_colorido.add_sugar/100)*input_arroz_integral_colorido;
+        let result_protein_arroz_integral_colorido = (arroz_integral_colorido.protein/100)*input_arroz_integral_colorido;
+        let result_fat_arroz_integral_colorido = (arroz_integral_colorido.fat/100)*input_arroz_integral_colorido;
+        let result_sat_fat_arroz_integral_colorido = (arroz_integral_colorido.sat_fat/100)*input_arroz_integral_colorido;
+        let result_trans_fat_arroz_integral_colorido = (arroz_integral_colorido.trans_fat/100)*input_arroz_integral_colorido;
+        let result_food_fiber_arroz_integral_colorido = (arroz_integral_colorido.food_fiber/100)*input_arroz_integral_colorido;
+        let result_sodium_arroz_integral_colorido = (arroz_integral_colorido.sodium/100)*input_arroz_integral_colorido;
+        //============ calculo arroz_integral_colorido =======================================
+
+        //============ calculo arroz_branco =======================================
+        let result_val_energ_arroz_branco = (arroz_branco.val_energ/100)*input_arroz_branco;
+        let result_carbo_arroz_branco = (arroz_branco.carbo/100)*input_arroz_branco;
+        let result_total_sugar_arroz_branco = (arroz_branco.total_sugar/100)*input_arroz_branco;
+        let result_add_sugar_arroz_branco = (arroz_branco.add_sugar/100)*input_arroz_branco;
+        let result_protein_arroz_branco = (arroz_branco.protein/100)*input_arroz_branco;
+        let result_fat_arroz_branco = (arroz_branco.fat/100)*input_arroz_branco;
+        let result_sat_fat_arroz_branco = (arroz_branco.sat_fat/100)*input_arroz_branco;
+        let result_trans_fat_arroz_branco = (arroz_branco.trans_fat/100)*input_arroz_branco;
+        let result_food_fiber_arroz_branco = (arroz_branco.food_fiber/100)*input_arroz_branco;
+        let result_sodium_arroz_branco = (arroz_branco.sodium/100)*input_arroz_branco;
+        //============ calculo arroz_branco =======================================
+
+        //============ calculo escondidinho_de_aipim =======================================
+        let result_val_energ_escondidinho_de_aipim = (escondidinho_de_aipim.val_energ/100)*input_escondidinho_de_aipim;
+        let result_carbo_escondidinho_de_aipim = (escondidinho_de_aipim.carbo/100)*input_escondidinho_de_aipim;
+        let result_total_sugar_escondidinho_de_aipim = (escondidinho_de_aipim.total_sugar/100)*input_escondidinho_de_aipim;
+        let result_add_sugar_escondidinho_de_aipim = (escondidinho_de_aipim.add_sugar/100)*input_escondidinho_de_aipim;
+        let result_protein_escondidinho_de_aipim = (escondidinho_de_aipim.protein/100)*input_escondidinho_de_aipim;
+        let result_fat_escondidinho_de_aipim = (escondidinho_de_aipim.fat/100)*input_escondidinho_de_aipim;
+        let result_sat_fat_escondidinho_de_aipim = (escondidinho_de_aipim.sat_fat/100)*input_escondidinho_de_aipim;
+        let result_trans_fat_escondidinho_de_aipim = (escondidinho_de_aipim.trans_fat/100)*input_escondidinho_de_aipim;
+        let result_food_fiber_escondidinho_de_aipim = (escondidinho_de_aipim.food_fiber/100)*input_escondidinho_de_aipim;
+        let result_sodium_escondidinho_de_aipim = (escondidinho_de_aipim.sodium/100)*input_escondidinho_de_aipim;
+        //============ calculo escondidinho_de_aipim =======================================
+
+        //============ calculo batata_doce_rustica =======================================
+        let result_val_energ_batata_doce_rustica = (batata_doce_rustica.val_energ/100)*input_batata_doce_rustica;
+        let result_carbo_batata_doce_rustica = (batata_doce_rustica.carbo/100)*input_batata_doce_rustica;
+        let result_total_sugar_batata_doce_rustica = (batata_doce_rustica.total_sugar/100)*input_batata_doce_rustica;
+        let result_add_sugar_batata_doce_rustica = (batata_doce_rustica.add_sugar/100)*input_batata_doce_rustica;
+        let result_protein_batata_doce_rustica = (batata_doce_rustica.protein/100)*input_batata_doce_rustica;
+        let result_fat_batata_doce_rustica = (batata_doce_rustica.fat/100)*input_batata_doce_rustica;
+        let result_sat_fat_batata_doce_rustica = (batata_doce_rustica.sat_fat/100)*input_batata_doce_rustica;
+        let result_trans_fat_batata_doce_rustica = (batata_doce_rustica.trans_fat/100)*input_batata_doce_rustica;
+        let result_food_fiber_batata_doce_rustica = (batata_doce_rustica.food_fiber/100)*input_batata_doce_rustica;
+        let result_sodium_batata_doce_rustica = (batata_doce_rustica.sodium/100)*input_batata_doce_rustica;
+        //============ calculo batata_doce_rustica =======================================
+
+        //============ calculo pure_de_abobora_cabotia =======================================
+        let result_val_energ_pure_de_abobora_cabotia = (pure_de_abobora_cabotia.val_energ/100)*input_pure_de_abobora_cabotia;
+        let result_carbo_pure_de_abobora_cabotia = (pure_de_abobora_cabotia.carbo/100)*input_pure_de_abobora_cabotia;
+        let result_total_sugar_pure_de_abobora_cabotia = (pure_de_abobora_cabotia.total_sugar/100)*input_pure_de_abobora_cabotia;
+        let result_add_sugar_pure_de_abobora_cabotia = (pure_de_abobora_cabotia.add_sugar/100)*input_pure_de_abobora_cabotia;
+        let result_protein_pure_de_abobora_cabotia = (pure_de_abobora_cabotia.protein/100)*input_pure_de_abobora_cabotia;
+        let result_fat_pure_de_abobora_cabotia = (pure_de_abobora_cabotia.fat/100)*input_pure_de_abobora_cabotia;
+        let result_sat_fat_pure_de_abobora_cabotia = (pure_de_abobora_cabotia.sat_fat/100)*input_pure_de_abobora_cabotia;
+        let result_trans_fat_pure_de_abobora_cabotia = (pure_de_abobora_cabotia.trans_fat/100)*input_pure_de_abobora_cabotia;
+        let result_food_fiber_pure_de_abobora_cabotia = (pure_de_abobora_cabotia.food_fiber/100)*input_pure_de_abobora_cabotia;
+        let result_sodium_pure_de_abobora_cabotia = (pure_de_abobora_cabotia.sodium/100)*input_pure_de_abobora_cabotia;
+        //============ calculo pure_de_abobora_cabotia =======================================
+
+        //============ calculo pure_de_batata_inglesa =======================================
+        let result_val_energ_pure_de_batata_inglesa = (pure_de_batata_inglesa.val_energ/100)*input_pure_de_batata_inglesa;
+        let result_carbo_pure_de_batata_inglesa = (pure_de_batata_inglesa.carbo/100)*input_pure_de_batata_inglesa;
+        let result_total_sugar_pure_de_batata_inglesa = (pure_de_batata_inglesa.total_sugar/100)*input_pure_de_batata_inglesa;
+        let result_add_sugar_pure_de_batata_inglesa = (pure_de_batata_inglesa.add_sugar/100)*input_pure_de_batata_inglesa;
+        let result_protein_pure_de_batata_inglesa = (pure_de_batata_inglesa.protein/100)*input_pure_de_batata_inglesa;
+        let result_fat_pure_de_batata_inglesa = (pure_de_batata_inglesa.fat/100)*input_pure_de_batata_inglesa;
+        let result_sat_fat_pure_de_batata_inglesa = (pure_de_batata_inglesa.sat_fat/100)*input_pure_de_batata_inglesa;
+        let result_trans_fat_pure_de_batata_inglesa = (pure_de_batata_inglesa.trans_fat/100)*input_pure_de_batata_inglesa;
+        let result_food_fiber_pure_de_batata_inglesa = (pure_de_batata_inglesa.food_fiber/100)*input_pure_de_batata_inglesa;
+        let result_sodium_pure_de_batata_inglesa = (pure_de_batata_inglesa.sodium/100)*input_pure_de_batata_inglesa;
+        //============ calculo pure_de_batata_inglesa =======================================
+
+        //============ calculo pure_de_batata_salsa =======================================
+        let result_val_energ_pure_de_batata_salsa = (pure_de_batata_salsa.val_energ/100)*input_pure_de_batata_salsa;
+        let result_carbo_pure_de_batata_salsa = (pure_de_batata_salsa.carbo/100)*input_pure_de_batata_salsa;
+        let result_total_sugar_pure_de_batata_salsa = (pure_de_batata_salsa.total_sugar/100)*input_pure_de_batata_salsa;
+        let result_add_sugar_pure_de_batata_salsa = (pure_de_batata_salsa.add_sugar/100)*input_pure_de_batata_salsa;
+        let result_protein_pure_de_batata_salsa = (pure_de_batata_salsa.protein/100)*input_pure_de_batata_salsa;
+        let result_fat_pure_de_batata_salsa = (pure_de_batata_salsa.fat/100)*input_pure_de_batata_salsa;
+        let result_sat_fat_pure_de_batata_salsa = (pure_de_batata_salsa.sat_fat/100)*input_pure_de_batata_salsa;
+        let result_trans_fat_pure_de_batata_salsa = (pure_de_batata_salsa.trans_fat/100)*input_pure_de_batata_salsa;
+        let result_food_fiber_pure_de_batata_salsa = (pure_de_batata_salsa.food_fiber/100)*input_pure_de_batata_salsa;
+        let result_sodium_pure_de_batata_salsa = (pure_de_batata_salsa.sodium/100)*input_pure_de_batata_salsa;
+        //============ calculo pure_de_batata_salsa =======================================
+
+        //============ calculo pure_de_batata_doce =======================================
+        let result_val_energ_pure_de_batata_doce = (pure_de_batata_doce.val_energ/100)*input_pure_de_batata_doce;
+        let result_carbo_pure_de_batata_doce = (pure_de_batata_doce.carbo/100)*input_pure_de_batata_doce;
+        let result_total_sugar_pure_de_batata_doce = (pure_de_batata_doce.total_sugar/100)*input_pure_de_batata_doce;
+        let result_add_sugar_pure_de_batata_doce = (pure_de_batata_doce.add_sugar/100)*input_pure_de_batata_doce;
+        let result_protein_pure_de_batata_doce = (pure_de_batata_doce.protein/100)*input_pure_de_batata_doce;
+        let result_fat_pure_de_batata_doce = (pure_de_batata_doce.fat/100)*input_pure_de_batata_doce;
+        let result_sat_fat_pure_de_batata_doce = (pure_de_batata_doce.sat_fat/100)*input_pure_de_batata_doce;
+        let result_trans_fat_pure_de_batata_doce = (pure_de_batata_doce.trans_fat/100)*input_pure_de_batata_doce;
+        let result_food_fiber_pure_de_batata_doce = (pure_de_batata_doce.food_fiber/100)*input_pure_de_batata_doce;
+        let result_sodium_pure_de_batata_doce = (pure_de_batata_doce.sodium/100)*input_pure_de_batata_doce;
+        //============ calculo pure_de_batata_doce =======================================
+
+        //============ calculo macarrao_integral =======================================
+        let result_val_energ_macarrao_integral = (macarrao_integral.val_energ/100)*input_macarrao_integral;
+        let result_carbo_macarrao_integral = (macarrao_integral.carbo/100)*input_macarrao_integral;
+        let result_total_sugar_macarrao_integral = (macarrao_integral.total_sugar/100)*input_macarrao_integral;
+        let result_add_sugar_macarrao_integral = (macarrao_integral.add_sugar/100)*input_macarrao_integral;
+        let result_protein_macarrao_integral = (macarrao_integral.protein/100)*input_macarrao_integral;
+        let result_fat_macarrao_integral = (macarrao_integral.fat/100)*input_macarrao_integral;
+        let result_sat_fat_macarrao_integral = (macarrao_integral.sat_fat/100)*input_macarrao_integral;
+        let result_trans_fat_macarrao_integral = (macarrao_integral.trans_fat/100)*input_macarrao_integral;
+        let result_food_fiber_macarrao_integral = (macarrao_integral.food_fiber/100)*input_macarrao_integral;
+        let result_sodium_macarrao_integral = (macarrao_integral.sodium/100)*input_macarrao_integral;
+        //============ calculo macarrao_integral =======================================
+
+        //============ calculo macarrao_de_arroz =======================================
+        let result_val_energ_macarrao_de_arroz = (macarrao_de_arroz.val_energ/100)*input_macarrao_de_arroz;
+        let result_carbo_macarrao_de_arroz = (macarrao_de_arroz.carbo/100)*input_macarrao_de_arroz;
+        let result_total_sugar_macarrao_de_arroz = (macarrao_de_arroz.total_sugar/100)*input_macarrao_de_arroz;
+        let result_add_sugar_macarrao_de_arroz = (macarrao_de_arroz.add_sugar/100)*input_macarrao_de_arroz;
+        let result_protein_macarrao_de_arroz = (macarrao_de_arroz.protein/100)*input_macarrao_de_arroz;
+        let result_fat_macarrao_de_arroz = (macarrao_de_arroz.fat/100)*input_macarrao_de_arroz;
+        let result_sat_fat_macarrao_de_arroz = (macarrao_de_arroz.sat_fat/100)*input_macarrao_de_arroz;
+        let result_trans_fat_macarrao_de_arroz = (macarrao_de_arroz.trans_fat/100)*input_macarrao_de_arroz;
+        let result_food_fiber_macarrao_de_arroz = (macarrao_de_arroz.food_fiber/100)*input_macarrao_de_arroz;
+        let result_sodium_macarrao_de_arroz = (macarrao_de_arroz.sodium/100)*input_macarrao_de_arroz;
+        //============ calculo macarrao_de_arroz =======================================
+
+        //============ calculo grao_de_bico =======================================
+        let result_val_energ_grao_de_bico = (grao_de_bico.val_energ/100)*input_grao_de_bico;
+        let result_carbo_grao_de_bico = (grao_de_bico.carbo/100)*input_grao_de_bico;
+        let result_total_sugar_grao_de_bico = (grao_de_bico.total_sugar/100)*input_grao_de_bico;
+        let result_add_sugar_grao_de_bico = (grao_de_bico.add_sugar/100)*input_grao_de_bico;
+        let result_protein_grao_de_bico = (grao_de_bico.protein/100)*input_grao_de_bico;
+        let result_fat_grao_de_bico = (grao_de_bico.fat/100)*input_grao_de_bico;
+        let result_sat_fat_grao_de_bico = (grao_de_bico.sat_fat/100)*input_grao_de_bico;
+        let result_trans_fat_grao_de_bico = (grao_de_bico.trans_fat/100)*input_grao_de_bico;
+        let result_food_fiber_grao_de_bico = (grao_de_bico.food_fiber/100)*input_grao_de_bico;
+        let result_sodium_grao_de_bico = (grao_de_bico.sodium/100)*input_grao_de_bico;
+        //============ calculo grao_de_bico =======================================
+
+        //============ calculo feijao =======================================
+        let result_val_energ_feijao = (feijao.val_energ/100)*input_feijao;
+        let result_carbo_feijao = (feijao.carbo/100)*input_feijao;
+        let result_total_sugar_feijao = (feijao.total_sugar/100)*input_feijao;
+        let result_add_sugar_feijao = (feijao.add_sugar/100)*input_feijao;
+        let result_protein_feijao = (feijao.protein/100)*input_feijao;
+        let result_fat_feijao = (feijao.fat/100)*input_feijao;
+        let result_sat_fat_feijao = (feijao.sat_fat/100)*input_feijao;
+        let result_trans_fat_feijao = (feijao.trans_fat/100)*input_feijao;
+        let result_food_fiber_feijao = (feijao.food_fiber/100)*input_feijao;
+        let result_sodium_feijao = (feijao.sodium/100)*input_feijao;
+        //============ calculo feijao =======================================
+
+        //============ calculo macarrao_tradicional =======================================
+        let result_val_energ_macarrao_tradicional = (macarrao_tradicional.val_energ/100)*input_macarrao_tradicional;
+        let result_carbo_macarrao_tradicional = (macarrao_tradicional.carbo/100)*input_macarrao_tradicional;
+        let result_total_sugar_macarrao_tradicional = (macarrao_tradicional.total_sugar/100)*input_macarrao_tradicional;
+        let result_add_sugar_macarrao_tradicional = (macarrao_tradicional.add_sugar/100)*input_macarrao_tradicional;
+        let result_protein_macarrao_tradicional = (macarrao_tradicional.protein/100)*input_macarrao_tradicional;
+        let result_fat_macarrao_tradicional = (macarrao_tradicional.fat/100)*input_macarrao_tradicional;
+        let result_sat_fat_macarrao_tradicional = (macarrao_tradicional.sat_fat/100)*input_macarrao_tradicional;
+        let result_trans_fat_macarrao_tradicional = (macarrao_tradicional.trans_fat/100)*input_macarrao_tradicional;
+        let result_food_fiber_macarrao_tradicional = (macarrao_tradicional.food_fiber/100)*input_macarrao_tradicional;
+        let result_sodium_macarrao_tradicional = (macarrao_tradicional.sodium/100)*input_macarrao_tradicional;
+        //============ calculo macarrao_tradicional =======================================
+
+
+        //============ calculo nhoque_de_batata_doce =======================================
+        let result_val_energ_nhoque_de_batata_doce = (nhoque_de_batata_doce.val_energ/100)*input_nhoque_de_batata_doce;
+        let result_carbo_nhoque_de_batata_doce = (nhoque_de_batata_doce.carbo/100)*input_nhoque_de_batata_doce;
+        let result_total_sugar_nhoque_de_batata_doce = (nhoque_de_batata_doce.total_sugar/100)*input_nhoque_de_batata_doce;
+        let result_add_sugar_nhoque_de_batata_doce = (nhoque_de_batata_doce.add_sugar/100)*input_nhoque_de_batata_doce;
+        let result_protein_nhoque_de_batata_doce = (nhoque_de_batata_doce.protein/100)*input_nhoque_de_batata_doce;
+        let result_fat_nhoque_de_batata_doce = (nhoque_de_batata_doce.fat/100)*input_nhoque_de_batata_doce;
+        let result_sat_fat_nhoque_de_batata_doce = (nhoque_de_batata_doce.sat_fat/100)*input_nhoque_de_batata_doce;
+        let result_trans_fat_nhoque_de_batata_doce = (nhoque_de_batata_doce.trans_fat/100)*input_nhoque_de_batata_doce;
+        let result_food_fiber_nhoque_de_batata_doce = (nhoque_de_batata_doce.food_fiber/100)*input_nhoque_de_batata_doce;
+        let result_sodium_nhoque_de_batata_doce = (nhoque_de_batata_doce.sodium/100)*input_nhoque_de_batata_doce;
+        //============ calculo nhoque_de_batata_doce =======================================
+
+
+        //===================== result soma calorias ===============================
+        let result_val_energ = (
+        result_val_energ_carne_moida
+        +result_val_energ_carne_panela
+        +result_val_energ_frango_desfiado
+        +result_val_energ_sobrecoxa_em_lasca
+        +result_val_energ_carne_moida_colorida
+        +result_val_energ_frango_desfiado_colorido
+        +result_val_energ_peixe
+        +result_val_energ_proteina_de_soja
+        +result_val_energ_frango_em_tiras
+        +result_val_energ_lombo_suino_agridoce
+        +result_val_energ_lentilha
+        +result_val_energ_mix_de_legumes
+        +result_val_energ_arroz_integral
+        +result_val_energ_arroz_integral_colorido
+        +result_val_energ_arroz_branco
+        +result_val_energ_escondidinho_de_aipim
+        +result_val_energ_batata_doce_rustica
+        +result_val_energ_pure_de_abobora_cabotia
+        +result_val_energ_pure_de_batata_inglesa
+        +result_val_energ_pure_de_batata_salsa
+        +result_val_energ_pure_de_batata_doce
+        +result_val_energ_macarrao_integral
+        +result_val_energ_macarrao_de_arroz
+        +result_val_energ_grao_de_bico
+        +result_val_energ_feijao
+        +result_val_energ_macarrao_tradicional
+        +result_val_energ_nhoque_de_batata_doce);
+        //===================== result soma calorias ===============================
+
+
+        //===================== result soma carboidrato ===============================
+        let result_carbo = (
+        result_carbo_carne_moida
+        +result_carbo_carne_panela
+        +result_carbo_frango_desfiado
+        +result_carbo_sobrecoxa_em_lasca
+        +result_carbo_carne_moida_colorida
+        +result_carbo_frango_desfiado_colorido
+        +result_carbo_peixe
+        +result_carbo_proteina_de_soja
+        +result_carbo_frango_em_tiras
+        +result_carbo_lombo_suino_agridoce
+        +result_carbo_lentilha
+        +result_carbo_mix_de_legumes
+        +result_carbo_arroz_integral
+        +result_carbo_arroz_integral_colorido
+        +result_carbo_arroz_branco
+        +result_carbo_escondidinho_de_aipim
+        +result_carbo_batata_doce_rustica
+        +result_carbo_pure_de_abobora_cabotia
+        +result_carbo_pure_de_batata_inglesa
+        +result_carbo_pure_de_batata_salsa
+        +result_carbo_pure_de_batata_doce
+        +result_carbo_macarrao_integral
+        +result_carbo_macarrao_de_arroz
+        +result_carbo_grao_de_bico
+        +result_carbo_feijao
+        +result_carbo_macarrao_tradicional
+        +result_carbo_nhoque_de_batata_doce);
+        //===================== result soma carboidrato ===============================
+
+
+        //===================== result soma total sugar ===============================
+        let result_total_sugar = (
+        result_total_sugar_carne_moida
+        +result_total_sugar_carne_panela
+        +result_total_sugar_frango_desfiado
+        +result_total_sugar_sobrecoxa_em_lasca
+        +result_total_sugar_carne_moida_colorida
+        +result_total_sugar_frango_desfiado_colorido
+        +result_total_sugar_peixe
+        +result_total_sugar_proteina_de_soja
+        +result_total_sugar_frango_em_tiras
+        +result_total_sugar_lombo_suino_agridoce
+        +result_total_sugar_lentilha
+        +result_total_sugar_mix_de_legumes
+        +result_total_sugar_arroz_integral
+        +result_total_sugar_arroz_integral_colorido
+        +result_total_sugar_arroz_branco
+        +result_total_sugar_escondidinho_de_aipim
+        +result_total_sugar_batata_doce_rustica
+        +result_total_sugar_pure_de_abobora_cabotia
+        +result_total_sugar_pure_de_batata_inglesa
+        +result_total_sugar_pure_de_batata_salsa
+        +result_total_sugar_pure_de_batata_doce
+        +result_total_sugar_macarrao_integral
+        +result_total_sugar_macarrao_de_arroz
+        +result_total_sugar_grao_de_bico
+        +result_total_sugar_feijao
+        +result_total_sugar_macarrao_tradicional
+        +result_total_sugar_nhoque_de_batata_doce);
+        //===================== result soma total sugar ===============================
+
+
+        //===================== result soma add sugar ===============================
+        let result_add_sugar = (
+        result_add_sugar_carne_moida
+        +result_add_sugar_carne_panela
+        +result_add_sugar_frango_desfiado
+        +result_add_sugar_sobrecoxa_em_lasca
+        +result_add_sugar_carne_moida_colorida
+        +result_add_sugar_frango_desfiado_colorido
+        +result_add_sugar_peixe
+        +result_add_sugar_proteina_de_soja
+        +result_add_sugar_frango_em_tiras
+        +result_add_sugar_lombo_suino_agridoce
+        +result_add_sugar_lentilha
+        +result_add_sugar_mix_de_legumes
+        +result_add_sugar_arroz_integral
+        +result_add_sugar_arroz_integral_colorido
+        +result_add_sugar_arroz_branco
+        +result_add_sugar_escondidinho_de_aipim
+        +result_add_sugar_batata_doce_rustica
+        +result_add_sugar_pure_de_abobora_cabotia
+        +result_add_sugar_pure_de_batata_inglesa
+        +result_add_sugar_pure_de_batata_salsa
+        +result_add_sugar_pure_de_batata_doce
+        +result_add_sugar_macarrao_integral
+        +result_add_sugar_macarrao_de_arroz
+        +result_add_sugar_grao_de_bico
+        +result_add_sugar_feijao
+        +result_add_sugar_macarrao_tradicional
+        +result_add_sugar_nhoque_de_batata_doce);
+        //===================== result soma add sugar ===============================
+
+        
+        //===================== result soma protein ===============================
+        let result_protein = (
+        result_protein_carne_moida
+        +result_protein_carne_panela
+        +result_protein_frango_desfiado
+        +result_protein_sobrecoxa_em_lasca
+        +result_protein_carne_moida_colorida
+        +result_protein_frango_desfiado_colorido
+        +result_protein_peixe
+        +result_protein_proteina_de_soja
+        +result_protein_frango_em_tiras
+        +result_protein_lombo_suino_agridoce
+        +result_protein_lentilha
+        +result_protein_mix_de_legumes
+        +result_protein_arroz_integral
+        +result_protein_arroz_integral_colorido
+        +result_protein_arroz_branco
+        +result_protein_escondidinho_de_aipim
+        +result_protein_batata_doce_rustica
+        +result_protein_pure_de_abobora_cabotia
+        +result_protein_pure_de_batata_inglesa
+        +result_protein_pure_de_batata_salsa
+        +result_protein_pure_de_batata_doce
+        +result_protein_macarrao_integral
+        +result_protein_macarrao_de_arroz
+        +result_protein_grao_de_bico
+        +result_protein_feijao
+        +result_protein_macarrao_tradicional
+        +result_protein_nhoque_de_batata_doce);
+        //===================== result soma protein ===============================
+
+
+        //===================== result soma fat ===============================
+        let result_fat = (
+        result_fat_carne_moida
+        +result_fat_carne_panela
+        +result_fat_frango_desfiado
+        +result_fat_sobrecoxa_em_lasca
+        +result_fat_carne_moida_colorida
+        +result_fat_frango_desfiado_colorido
+        +result_fat_peixe
+        +result_fat_proteina_de_soja
+        +result_fat_frango_em_tiras
+        +result_fat_lombo_suino_agridoce
+        +result_fat_lentilha
+        +result_fat_mix_de_legumes
+        +result_fat_arroz_integral
+        +result_fat_arroz_integral_colorido
+        +result_fat_arroz_branco
+        +result_fat_escondidinho_de_aipim
+        +result_fat_batata_doce_rustica
+        +result_fat_pure_de_abobora_cabotia
+        +result_fat_pure_de_batata_inglesa
+        +result_fat_pure_de_batata_salsa
+        +result_fat_pure_de_batata_doce
+        +result_fat_macarrao_integral
+        +result_fat_macarrao_de_arroz
+        +result_fat_grao_de_bico
+        +result_fat_feijao
+        +result_fat_macarrao_tradicional
+        +result_fat_nhoque_de_batata_doce);
+        //===================== result soma fat ===============================
+
+
+        //===================== result soma sat fat ===============================
+        let result_sat_fat = (
+        result_sat_fat_carne_moida
+        +result_sat_fat_carne_panela
+        +result_sat_fat_frango_desfiado
+        +result_sat_fat_sobrecoxa_em_lasca
+        +result_sat_fat_carne_moida_colorida
+        +result_sat_fat_frango_desfiado_colorido
+        +result_sat_fat_peixe
+        +result_sat_fat_proteina_de_soja
+        +result_sat_fat_frango_em_tiras
+        +result_sat_fat_lombo_suino_agridoce
+        +result_sat_fat_lentilha
+        +result_sat_fat_mix_de_legumes
+        +result_sat_fat_arroz_integral
+        +result_sat_fat_arroz_integral_colorido
+        +result_sat_fat_arroz_branco
+        +result_sat_fat_escondidinho_de_aipim
+        +result_sat_fat_batata_doce_rustica
+        +result_sat_fat_pure_de_abobora_cabotia
+        +result_sat_fat_pure_de_batata_inglesa
+        +result_sat_fat_pure_de_batata_salsa
+        +result_sat_fat_pure_de_batata_doce
+        +result_sat_fat_macarrao_integral
+        +result_sat_fat_macarrao_de_arroz
+        +result_sat_fat_grao_de_bico
+        +result_sat_fat_feijao
+        +result_sat_fat_macarrao_tradicional
+        +result_sat_fat_nhoque_de_batata_doce);
+        //===================== result soma sat fat ===============================
+
+
+        //===================== result soma trans fat ===============================
+        let result_trans_fat = (
+        result_trans_fat_carne_moida
+        +result_trans_fat_carne_panela
+        +result_trans_fat_frango_desfiado
+        +result_trans_fat_sobrecoxa_em_lasca
+        +result_trans_fat_carne_moida_colorida
+        +result_trans_fat_frango_desfiado_colorido
+        +result_trans_fat_peixe
+        +result_trans_fat_proteina_de_soja
+        +result_trans_fat_frango_em_tiras
+        +result_trans_fat_lombo_suino_agridoce
+        +result_trans_fat_lentilha
+        +result_trans_fat_mix_de_legumes
+        +result_trans_fat_arroz_integral
+        +result_trans_fat_arroz_integral_colorido
+        +result_trans_fat_arroz_branco
+        +result_trans_fat_escondidinho_de_aipim
+        +result_trans_fat_batata_doce_rustica
+        +result_trans_fat_pure_de_abobora_cabotia
+        +result_trans_fat_pure_de_batata_inglesa
+        +result_trans_fat_pure_de_batata_salsa
+        +result_trans_fat_pure_de_batata_doce
+        +result_trans_fat_macarrao_integral
+        +result_trans_fat_macarrao_de_arroz
+        +result_trans_fat_grao_de_bico
+        +result_trans_fat_feijao
+        +result_trans_fat_macarrao_tradicional
+        +result_trans_fat_nhoque_de_batata_doce);
+        //===================== result soma trans fat ===============================
+
+
+        //===================== result soma food fiber ===============================
+        let result_food_fiber = (
+        result_food_fiber_carne_moida
+        +result_food_fiber_carne_panela
+        +result_food_fiber_frango_desfiado
+        +result_food_fiber_sobrecoxa_em_lasca
+        +result_food_fiber_carne_moida_colorida
+        +result_food_fiber_frango_desfiado_colorido
+        +result_food_fiber_peixe
+        +result_food_fiber_proteina_de_soja
+        +result_food_fiber_frango_em_tiras
+        +result_food_fiber_lombo_suino_agridoce
+        +result_food_fiber_lentilha
+        +result_food_fiber_mix_de_legumes
+        +result_food_fiber_arroz_integral
+        +result_food_fiber_arroz_integral_colorido
+        +result_food_fiber_arroz_branco
+        +result_food_fiber_escondidinho_de_aipim
+        +result_food_fiber_batata_doce_rustica
+        +result_food_fiber_pure_de_abobora_cabotia
+        +result_food_fiber_pure_de_batata_inglesa
+        +result_food_fiber_pure_de_batata_salsa
+        +result_food_fiber_pure_de_batata_doce
+        +result_food_fiber_macarrao_integral
+        +result_food_fiber_macarrao_de_arroz
+        +result_food_fiber_grao_de_bico
+        +result_food_fiber_feijao
+        +result_food_fiber_macarrao_tradicional
+        +result_food_fiber_nhoque_de_batata_doce);
+        //===================== result soma food fiber ===============================
+
+
+        //===================== result soma sodium ===============================
+        let result_sodium = (
+        result_sodium_carne_moida
+        +result_sodium_carne_panela
+        +result_sodium_frango_desfiado
+        +result_sodium_sobrecoxa_em_lasca
+        +result_sodium_carne_moida_colorida
+        +result_sodium_frango_desfiado_colorido
+        +result_sodium_peixe
+        +result_sodium_proteina_de_soja
+        +result_sodium_frango_em_tiras
+        +result_sodium_lombo_suino_agridoce
+        +result_sodium_lentilha
+        +result_sodium_mix_de_legumes
+        +result_sodium_arroz_integral
+        +result_sodium_arroz_integral_colorido
+        +result_sodium_arroz_branco
+        +result_sodium_escondidinho_de_aipim
+        +result_sodium_batata_doce_rustica
+        +result_sodium_pure_de_abobora_cabotia
+        +result_sodium_pure_de_batata_inglesa
+        +result_sodium_pure_de_batata_salsa
+        +result_sodium_pure_de_batata_doce
+        +result_sodium_macarrao_integral
+        +result_sodium_macarrao_de_arroz
+        +result_sodium_grao_de_bico
+        +result_sodium_feijao
+        +result_sodium_macarrao_tradicional
+        +result_sodium_nhoque_de_batata_doce);
+        //===================== result soma sodium ===============================
+        
+        console.log('mix legumes: '+mix_de_legumes.sodium)
+
+        
+
+
+        //============ resultado 100g ========================================
+        function result_100 (variable){
+
+            let result = 0;
+
+            if(input_carne_moida > 0){result += carne_moida.getDynamicPropertyValue(variable)}else{result += 0;}
+            if(input_carne_panela > 0){result += carne_panela.getDynamicPropertyValue(variable)}else{result += 0;}
+            if(input_frango_desfiado > 0){result += frango_desfiado.getDynamicPropertyValue(variable);}else{result += 0}
+            if(input_sobrecoxa_em_lasca > 0){result += sobrecoxa_em_lasca.getDynamicPropertyValue(variable)}else{result += 0}
+            if(input_carne_moida_colorida > 0){result += carne_moida_colorida.getDynamicPropertyValue(variable);}else{result += 0;}
+            if(input_frango_desfiado_colorido > 0){result += frango_desfiado_colorido.getDynamicPropertyValue(variable);}else{result += 0}
+            if(input_peixe > 0){result += peixe.getDynamicPropertyValue(variable);}else{result += 0;}
+            if(input_proteina_de_soja > 0){result += proteina_de_soja.getDynamicPropertyValue(variable);}else{result += 0}
+            if(input_frango_em_tiras > 0){result += frango_em_tiras.getDynamicPropertyValue(variable);}else{result += 0}
+            if(input_lombo_suino_agridoce > 0){result += lombo_suino_agridoce.getDynamicPropertyValue(variable);}else{result += 0;}
+
+            if(input_lentilha > 0){result += lentilha.getDynamicPropertyValue(variable)}else{result += 0;}
+            if(input_mix_de_legumes > 0){result += mix_de_legumes.getDynamicPropertyValue(variable)}else{result += 0;}
+            if(input_arroz_integral > 0){result += arroz_integral.getDynamicPropertyValue(variable);}else{result += 0}
+            if(input_arroz_integral_colorido > 0){result += arroz_integral_colorido.getDynamicPropertyValue(variable)}else{result += 0}
+            if(input_arroz_branco > 0){result += arroz_branco.getDynamicPropertyValue(variable);}else{result += 0;}
+            if(input_escondidinho_de_aipim > 0){result += escondidinho_de_aipim.getDynamicPropertyValue(variable);}else{result += 0}
+            if(input_feijao > 0){result += feijao.getDynamicPropertyValue(variable);}else{result += 0;}
+            if(input_batata_doce_rustica > 0){result += batata_doce_rustica.getDynamicPropertyValue(variable);}else{result += 0}
+            if(input_pure_de_abobora_cabotia > 0){result += pure_de_abobora_cabotia.getDynamicPropertyValue(variable);}else{result += 0}
+            if(input_pure_de_batata_inglesa > 0){result += pure_de_batata_inglesa.getDynamicPropertyValue(variable);}else{result += 0;}
+            if(input_pure_de_batata_salsa > 0){result += pure_de_batata_salsa.getDynamicPropertyValue(variable);}else{result += 0;}
+            if(input_pure_de_batata_doce > 0){result += pure_de_batata_doce.getDynamicPropertyValue(variable);}else{result += 0;}
+            if(input_macarrao_integral > 0){result += macarrao_integral.getDynamicPropertyValue(variable);}else{result += 0;}
+            if(input_macarrao_de_arroz > 0){result += macarrao_de_arroz.getDynamicPropertyValue(variable);}else{result += 0;}
+            if(input_grao_de_bico > 0){result += grao_de_bico.getDynamicPropertyValue(variable);}else{result += 0;}
+            if(input_macarrao_tradicional > 0){result += macarrao_tradicional.getDynamicPropertyValue(variable);}else{result += 0;}
+            if(input_nhoque_de_batata_doce > 0){result += nhoque_de_batata_doce.getDynamicPropertyValue(variable);}else{result += 0;}
+
+            return result;
+        }
+        //============ resultado 100g ========================================
+
+
+        //====================== resultados VD* ================================
+        let result_vd_val_energ = (result_val_energ*100)/2000;
+        let result_vd_carbo = (result_carbo*100)/300;
+        let result_vd_total_sugar = 0;
+        let result_vd_add_sugar = 0;
+        let result_vd_protein = (result_protein*100)/75;
+        let result_vd_fat = (result_fat*100)/55;
+        let result_vd_sat_fat = (result_sat_fat*100)/22;
+        let result_vd_trans_fat = 0;
+        let result_vd_food_fiber = (result_food_fiber*100)/25;
+        let result_vd_sodium = (result_sodium*100)/2400;
+        //====================== resultados VD* ================================
+        
+
+        //======= resultados ===============================================
+        console.log('valor energético: '+result_val_energ.toFixed(2));
+        console.log('carboidratos: '+result_carbo.toFixed(2));
+        console.log('açucar total: '+result_total_sugar.toFixed(2));
+        console.log('açucar adicional: '+result_add_sugar.toFixed(2));
+        console.log('proteína: '+result_protein.toFixed(2));
+        console.log('gorduras: '+result_fat.toFixed(2));
+        console.log('gorduras saturadas: '+result_sat_fat.toFixed(2));
+        console.log('gorduras trans: '+result_trans_fat.toFixed(2));
+        console.log('fibra alimentar: '+result_food_fiber.toFixed(2));
+        console.log('sódio: '+result_sodium.toFixed(2));
+
+        console.log('======= result 100 =========');
+        console.log('100 valor energetico: '+ result_100('val_energ'));
+        console.log('100 valor energetico: '+ result_100('carbo'));
+        console.log('100 valor energetico: '+ result_100('total_sugar'));
+        console.log('100 valor energetico: '+ result_100('add_sugar'));
+        console.log('100 valor energetico: '+ result_100('protein'));
+        console.log('100 valor energetico: '+ result_100('fat'));
+        console.log('100 valor energetico: '+ result_100('sat_fat'));
+        console.log('100 valor energetico: '+ result_100('trans_fat'));
+        console.log('100 valor energetico: '+ result_100('food_fiber'));
+        console.log('100 valor energetico: '+ result_100('sodium'));
+        //======= resultados ===============================================
+
+
+        //==================== campos dos resultados ==============================
+        const table_items = document.querySelectorAll('.table_items');
+        document.getElementById('table_100_val_energ').innerHTML = result_100('val_energ').toFixed(1);
+        document.getElementById('table_val_energ').innerHTML = result_val_energ.toFixed(1);
+        document.getElementById('table_vd_val_energ').innerHTML = result_vd_val_energ.toFixed(1);
+
+        document.getElementById('table_100_carbo').innerHTML = result_100('carbo').toFixed(1);
+        document.getElementById('table_carbo').innerHTML = result_carbo.toFixed(1);
+        document.getElementById('table_vd_carbo').innerHTML = result_vd_carbo.toFixed(1);
+
+        document.getElementById('table_100_total_sugar').innerHTML = result_100('total_sugar').toFixed(1);
+        document.getElementById('table_total_sugar').innerHTML = result_total_sugar.toFixed(1);
+        document.getElementById('table_vd_total_sugar').innerHTML = result_vd_total_sugar.toFixed(1);
+
+        document.getElementById('table_100_add_sugar').innerHTML = result_100('add_sugar').toFixed(1);
+        document.getElementById('table_add_sugar').innerHTML = result_add_sugar.toFixed(1);
+        document.getElementById('table_vd_add_sugar').innerHTML = result_vd_add_sugar.toFixed(1);
+
+        document.getElementById('table_100_protein').innerHTML = result_100('protein').toFixed(1);
+        document.getElementById('table_protein').innerHTML = result_protein.toFixed(1);
+        document.getElementById('table_vd_protein').innerHTML = result_vd_protein.toFixed(1);
+
+        document.getElementById('table_100_fat').innerHTML = result_100('fat').toFixed(1);
+        document.getElementById('table_fat').innerHTML = result_fat.toFixed(1);
+        document.getElementById('table_vd_fat').innerHTML = result_vd_fat.toFixed(1);
+
+        document.getElementById('table_100_sat_fat').innerHTML = result_100('sat_fat').toFixed(1);
+        document.getElementById('table_sat_fat').innerHTML = result_sat_fat.toFixed(1);
+        document.getElementById('table_vd_sat_fat').innerHTML = result_vd_sat_fat.toFixed(1);
+
+        document.getElementById('table_100_trans_fat').innerHTML = result_100('trans_fat').toFixed(1);
+        document.getElementById('table_trans_fat').innerHTML = result_trans_fat.toFixed(1);
+        document.getElementById('table_vd_trans_fat').innerHTML = result_vd_trans_fat.toFixed(1);
+
+        document.getElementById('table_100_food_fiber').innerHTML = result_100('food_fiber').toFixed(1);
+        document.getElementById('table_food_fiber').innerHTML = result_food_fiber.toFixed(1);
+        document.getElementById('table_vd_food_fiber').innerHTML = result_vd_food_fiber.toFixed(1);
+
+        document.getElementById('table_100_sodium').innerHTML = result_100('sodium').toFixed(1);
+        document.getElementById('table_sodium').innerHTML = result_sodium.toFixed(1);
+        document.getElementById('table_vd_sodium').innerHTML = result_vd_sodium.toFixed(1);
+        //==================== campos dos resultados =============================
+
+        console.log('table sodium: '+result_sodium);
+
+        let soma_total = parseFloat(input_carne_moida)+parseFloat(input_carne_panela)+parseFloat(input_frango_desfiado)+parseFloat(input_sobrecoxa_em_lasca)+parseFloat(input_carne_moida_colorida)+parseFloat(input_frango_desfiado_colorido)+parseFloat(input_peixe)+parseFloat(input_proteina_de_soja)+parseFloat(input_frango_em_tiras)+parseFloat(input_lombo_suino_agridoce)+parseFloat(input_lentilha)+parseFloat(input_mix_de_legumes)+parseFloat(input_arroz_integral)+parseFloat(input_arroz_integral_colorido)+parseFloat(input_arroz_branco)+parseFloat(input_escondidinho_de_aipim)+parseFloat(input_feijao)+parseFloat(input_batata_doce_rustica)+parseFloat(input_pure_de_abobora_cabotia)+parseFloat(input_pure_de_batata_inglesa)+parseFloat(input_pure_de_batata_salsa)+parseFloat(input_pure_de_batata_doce)+parseFloat(input_macarrao_integral)+parseFloat(input_macarrao_de_arroz)+parseFloat(input_grao_de_bico)+parseFloat(input_macarrao_tradicional)+parseFloat(input_nhoque_de_batata_doce);
+
+        document.getElementById('table_value_soma').innerHTML = soma_total
+
+        console.log(soma_total);
+        
+        //console.log('Valor Energético: '+result_val_energ);
+        //console.log('Carboidráto: '+result_carbo);
+
+        const container_info_nutri = document.querySelector('.container_info_nutri');
+        container_info_nutri.innerHTML = "";
+        //const container_nutri_into = document.createElement('div');
+
+        if(input_carne_moida > 0){
+            const paragraph_carne_moida = document.createElement('p');
+            paragraph_carne_moida.innerHTML = '<strong>Ingredientes '+carne_moida.nome+':</strong> '+carne_moida.ingred+' '+carne_moida.allergic;
+            container_info_nutri.append(paragraph_carne_moida);
+        };
+        if(input_carne_panela > 0){
+            const paragraph_carne_panela = document.createElement('p');
+            paragraph_carne_panela.innerHTML = '<strong>Ingredientes '+carne_panela.nome+':</strong> '+carne_panela.ingred+' '+carne_panela.allergic;
+            container_info_nutri.append(paragraph_carne_panela);
+        }
+        if(input_frango_desfiado > 0){
+            const paragraph_frango_desfiado = document.createElement('p');
+            paragraph_frango_desfiado.innerHTML = '<strong>Ingredientes '+frango_desfiado.nome+':</strong> '+frango_desfiado.ingred+' '+frango_desfiado.allergic;
+            container_info_nutri.append(paragraph_frango_desfiado);
+        }
+        if(input_sobrecoxa_em_lasca > 0){
+            const paragraph_sobrecoxa_em_lasca = document.createElement('p');
+            paragraph_sobrecoxa_em_lasca.innerHTML = '<strong>Ingredientes '+sobrecoxa_em_lasca.nome+':</strong> '+sobrecoxa_em_lasca.ingred+' '+sobrecoxa_em_lasca.allergic;
+            container_info_nutri.append(paragraph_sobrecoxa_em_lasca);
+        }
+        if(input_carne_moida_colorida > 0){
+            const paragraph_carne_moida_colorida = document.createElement('p');
+            paragraph_carne_moida_colorida.innerHTML = '<strong>Ingredientes '+carne_moida_colorida.nome+':</strong> '+carne_moida_colorida.ingred+' '+carne_moida_colorida.allergic;
+            container_info_nutri.append(paragraph_carne_moida_colorida);
+        }
+        if(input_frango_desfiado_colorido > 0){
+            const paragraph_frango_desfiado_colorido = document.createElement('p');
+            paragraph_frango_desfiado_colorido.innerHTML = '<strong>Ingredientes '+frango_desfiado_colorido.nome+':</strong> '+frango_desfiado_colorido.ingred+' '+frango_desfiado_colorido.allergic;
+            container_info_nutri.append(paragraph_frango_desfiado_colorido);
+        }
+        if(input_peixe > 0){
+            const paragraph_peixe = document.createElement('p');
+            paragraph_peixe.innerHTML = '<strong>Ingredientes '+peixe.nome+':</strong> '+peixe.ingred+' '+peixe.allergic;
+            container_info_nutri.append(paragraph_peixe);
+        }
+        if(input_proteina_de_soja > 0){
+            const paragraph_proteina_de_soja = document.createElement('p');
+            paragraph_proteina_de_soja.innerHTML = '<strong>Ingredientes '+proteina_de_soja.nome+':</strong> '+proteina_de_soja.ingred+' '+proteina_de_soja.allergic;
+            container_info_nutri.append(paragraph_proteina_de_soja);
+        }
+        if(input_frango_em_tiras > 0){
+            const paragraph_frango_em_tiras = document.createElement('p');
+            paragraph_frango_em_tiras.innerHTML = '<strong>Ingredientes '+frango_em_tiras.nome+':</strong> '+frango_em_tiras.ingred+' '+frango_em_tiras.allergic;
+            container_info_nutri.append(paragraph_frango_em_tiras);
+        }
+        if(input_lombo_suino_agridoce > 0){
+            const paragraph_lombo_suino_agridoce = document.createElement('p');
+            paragraph_lombo_suino_agridoce.innerHTML = '<strong>Ingredientes '+lombo_suino_agridoce.nome+':</strong> '+lombo_suino_agridoce.ingred+' '+lombo_suino_agridoce.allergic;
+            container_info_nutri.append(paragraph_lombo_suino_agridoce);
+        }
+        if(input_lentilha > 0){
+            const paragraph_lentilha = document.createElement('p');
+            paragraph_lentilha.innerHTML = '<strong>Ingredientes '+lentilha.nome+':</strong> '+lentilha.ingred+' '+lentilha.allergic;
+            container_info_nutri.append(paragraph_lentilha);
+        }
+        if(input_mix_de_legumes > 0){
+            const paragraph_mix_de_legumes = document.createElement('p');
+            paragraph_mix_de_legumes.innerHTML = '<strong>Ingredientes '+mix_de_legumes.nome+':</strong> '+mix_de_legumes.ingred+' '+mix_de_legumes.allergic;
+            container_info_nutri.append(paragraph_mix_de_legumes);
+        }
+        if(input_arroz_integral > 0){
+            const paragraph_arroz_integral = document.createElement('p');
+            paragraph_arroz_integral.innerHTML = '<strong>Ingredientes '+arroz_integral.nome+':</strong> '+arroz_integral.ingred+' '+arroz_integral.allergic;
+            container_info_nutri.append(paragraph_arroz_integral);
+            console.log(arroz_integral.allergic)
+        }
+        if(input_arroz_integral_colorido > 0){
+            const paragraph_arroz_integral_colorido = document.createElement('p');
+            paragraph_arroz_integral_colorido.innerHTML = '<strong>Ingredientes '+arroz_integral_colorido.nome+':</strong> '+arroz_integral_colorido.ingred+' '+arroz_integral_colorido.allergic;
+            container_info_nutri.append(paragraph_arroz_integral_colorido);
+        }
+        if(input_arroz_branco > 0){
+            const paragraph_arroz_branco = document.createElement('p');
+            paragraph_arroz_branco.innerHTML = '<strong>Ingredientes '+arroz_branco.nome+':</strong> '+arroz_branco.ingred+' '+arroz_branco.allergic;
+            container_info_nutri.append(paragraph_arroz_branco);
+        }
+        if(input_escondidinho_de_aipim > 0){
+            const paragraph_escondidinho_de_aipim = document.createElement('p');
+            paragraph_escondidinho_de_aipim.innerHTML = '<strong>Ingredientes '+escondidinho_de_aipim.nome+':</strong> '+escondidinho_de_aipim.ingred+' '+escondidinho_de_aipim.allergic;
+            container_info_nutri.append(paragraph_escondidinho_de_aipim);
+        }
+        if(input_feijao > 0){
+            const paragraph_feijao = document.createElement('p');
+            paragraph_feijao.innerHTML = '<strong>Ingredientes '+feijao.nome+':</strong> '+feijao.ingred+' '+feijao.allergic;
+            container_info_nutri.append(paragraph_feijao);
+        }
+        if(input_batata_doce_rustica > 0){
+            const paragraph_batata_doce_rustica = document.createElement('p');
+            paragraph_batata_doce_rustica.innerHTML = '<strong>Ingredientes '+batata_doce_rustica.nome+':</strong> '+batata_doce_rustica.ingred+' '+batata_doce_rustica.allergic;
+            container_info_nutri.append(paragraph_batata_doce_rustica);
+        }
+        if(input_pure_de_abobora_cabotia > 0){
+            const paragraph_pure_de_abobora_cabotia = document.createElement('p');
+            paragraph_pure_de_abobora_cabotia.innerHTML = '<strong>Ingredientes '+pure_de_abobora_cabotia.nome+':</strong> '+pure_de_abobora_cabotia.ingred+' '+pure_de_abobora_cabotia.allergic;
+            container_info_nutri.append(paragraph_pure_de_abobora_cabotia);
+        }
+        if(input_pure_de_batata_inglesa > 0){
+            const paragraph_pure_de_abobora_cabotia = document.createElement('p');
+            paragraph_pure_de_abobora_cabotia.innerHTML = '<strong>Ingredientes '+pure_de_batata_inglesa.nome+':</strong> '+pure_de_batata_inglesa.ingred+' '+pure_de_batata_inglesa.allergic;
+            container_info_nutri.append(paragraph_pure_de_abobora_cabotia);
+        }
+        if(input_pure_de_batata_salsa > 0){
+            const paragraph_pure_de_batata_salsa = document.createElement('p');
+            paragraph_pure_de_batata_salsa.innerHTML = '<strong>Ingredientes '+pure_de_batata_inglesa.nome+':</strong> '+pure_de_batata_inglesa.ingred+' '+pure_de_batata_inglesa.allergic;
+            container_info_nutri.append(paragraph_pure_de_batata_salsa);
+        }
+        if(input_pure_de_batata_doce > 0){
+            const paragraph_pure_de_batata_doce = document.createElement('p');
+            paragraph_pure_de_batata_doce.innerHTML = '<strong>Ingredientes '+pure_de_batata_doce.nome+':</strong> '+pure_de_batata_doce.ingred+' '+pure_de_batata_doce.allergic;
+            container_info_nutri.append(paragraph_pure_de_batata_doce);
+        }
+        if(input_macarrao_integral > 0){
+            const paragraph_macarrao_integral = document.createElement('p');
+            paragraph_macarrao_integral.innerHTML = '<strong>Ingredientes '+macarrao_integral.nome+':</strong> '+macarrao_integral.ingred+' '+macarrao_integral.allergic;
+            container_info_nutri.append(paragraph_macarrao_integral);
+        }
+        if(input_macarrao_de_arroz > 0){
+            const paragraph_macarrao_de_arroz = document.createElement('p');
+            paragraph_macarrao_de_arroz.innerHTML = '<strong>Ingredientes '+macarrao_de_arroz.nome+':</strong> '+macarrao_de_arroz.ingred+' '+macarrao_de_arroz.allergic;
+            container_info_nutri.append(paragraph_macarrao_de_arroz);
+        }
+        if(input_grao_de_bico > 0){
+            const paragraph_grao_de_bico = document.createElement('p');
+            paragraph_grao_de_bico.innerHTML = '<strong>Ingredientes '+grao_de_bico.nome+':</strong> '+grao_de_bico.ingred+' '+grao_de_bico.allergic;
+            container_info_nutri.append(paragraph_grao_de_bico);
+        }
+        //input_nhoque_de_batata_doce = all_values2[14].value; //apenas para teste
+        if(input_macarrao_tradicional > 0){
+            const paragraph_macarrao_tradicional = document.createElement('p');
+            paragraph_macarrao_tradicional.innerHTML = '<strong>Ingredientes '+macarrao_tradicional.nome+':</strong> '+macarrao_tradicional.ingred+' '+macarrao_tradicional.allergic;
+            container_info_nutri.append(paragraph_macarrao_tradicional);
+        }
+        if(input_nhoque_de_batata_doce > 0){
+            const paragraph_nhoque_de_batata_doce = document.createElement('p');
+            paragraph_nhoque_de_batata_doce.innerHTML = '<strong>Ingredientes '+nhoque_de_batata_doce.nome+':</strong> '+nhoque_de_batata_doce.ingred+' '+nhoque_de_batata_doce.allergic;
+            container_info_nutri.append(paragraph_nhoque_de_batata_doce);
+        }
+
+        console.log(nhoque_de_batata_doce.allergic);
+           
+        }
+
+
+        const all_inputs = document.querySelectorAll('.container-calc input');
+
+        all_inputs.forEach((item) => {
+
+            item.addEventListener('keyup', () => {
+
+                if(item.value < 0){
+                    alert('Erro: não é permitido valores negativos');
+                    item.value = 0;
+                }
+                
+
+            });
+
+        });
+
+        
+        
+        function clear_inputs(){
+
+            const table_items = document.querySelectorAll('.table_items');
+            const container_info_nutri = document.querySelector('.container_info_nutri');
+
+            all_inputs.forEach((item) => {
+
+                item.value = 0;
+                container_info_nutri.innerHTML = "";
+
+            });
+
+            table_items.forEach((item) => {
+
+                item.innerHTML = "0"
+
+            });
+
+            //============== inputs dos campos dos alimentos ========================
+            input_carne_moida = 0; //apenas para teste
+            input_carne_panela = 0; //apenas para teste
+            input_frango_desfiado = 0; //apenas para teste
+            input_sobrecoxa_em_lasca = 0; //apenas para teste
+            input_carne_moida_colorida = 0; //apenas para teste
+            input_frango_desfiado_colorido = 0; //apenas para teste
+            input_peixe = 0; //apenas para teste
+            input_proteina_de_soja = 0; //apenas para teste
+            input_frango_em_tiras = 0; //apenas para teste
+            input_lombo_suino_agridoce = 0; //apenas para teste
+            //============== inputs dos campos dos alimentos ========================
+
+
+
+            const all_values2 = document.querySelectorAll('.follow-calc input');
+            //============== inputs dos campos dos alimentos ========================
+            input_lentilha = 0; //apenas para teste
+            input_mix_de_legumes = 0; //apenas para teste
+            input_arroz_integral = 0; //apenas para teste
+            input_arroz_integral_colorido = 0; //apenas para teste
+            input_arroz_branco = 0; //apenas para teste
+            input_escondidinho_de_aipim = 0; //apenas para teste
+            input_feijao = 0; //apenas para teste
+            input_batata_doce_rustica = 0; //apenas para teste
+            input_pure_de_abobora_cabotia = 0; //apenas para teste
+            input_pure_de_batata_inglesa = 0; //apenas para teste
+            input_pure_de_batata_salsa = 0; //apenas para teste
+            input_pure_de_batata_doce = 0; //apenas para teste
+            input_macarrao_integral = 0; //apenas para teste
+            input_macarrao_de_arroz = 0; //apenas para teste
+            //input_nhoque_de_batata_doce = 0; //apenas para teste
+            input_grao_de_bico = 0; //apenas para teste
+            input_macarrao_tradicional = 0; //apenas para teste
+            input_nhoque_de_batata_doce = 0;
+            //============== inputs dos campos dos alimentos ========================
+        }
+        
+    </script>
+
+</body>
+</html>
